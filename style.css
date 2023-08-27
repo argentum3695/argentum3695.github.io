@@ -5,9 +5,35 @@
     background-color: #0d1117;
 }
 
-.main p{
+.main h3{
     color: #FFFAFA;
     text-align: center;
-    font-size: 350%;
+    font-size: 250%;
+    font-weight: normal;
+}
+
+.main {
+    margin-top: 7%;
 
 }
+
+.projects {
+    text-align: center;
+    font-size: 150%;
+}
+
+a {
+    text-decoration: none;
+}
+
+a {
+    color: #48cae4;
+}
+
+a:visited {
+    color: #0077b6;
+  }
+
+a:hover {
+    color: #ade8f4;
+  }

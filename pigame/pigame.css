@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    font-family: 'Poppins', Arial, sans-serif;;
+}
+
+#input {
+    margin: auto;
+    text-align: center;
+    margin-top: 20%;
+}
+
+#inputfield {
+    font-size: 180%;
+    text-align: center;
+    border-radius: 0.6em;
+    border-color: #b3b3b3;
+    border: 0.1em solid #b3b3b3;
+}
+
+input:focus {
+    outline: none;
+}
