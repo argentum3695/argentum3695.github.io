@@ -2,6 +2,14 @@
 
 * {
     font-family: 'Poppins', Arial, sans-serif;;
+
+    --text: #e9e2e2;
+    --background: #181616;
+    --primary: #0dc8ce;
+    --secondary: #2853e2;
+    --accent: #016d75;
+    --hover: #7DC3EB;
+    background-color: var(--background);
 }
 
 #input {
@@ -14,8 +22,8 @@
     font-size: 180%;
     text-align: center;
     border-radius: 0.6em;
-    border-color: #b3b3b3;
-    border: 0.1em solid #b3b3b3;
+    /* border-color: #b3b3b3; */
+    border: 0.1em solid var(--secondary);
 }
 
 input:focus {
