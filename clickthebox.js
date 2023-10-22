@@ -35,11 +35,11 @@ function getButtonPress(buttonID) {
 
 
         scoreChange = defScoreIncrement * ((allowedTime - Math.floor(elapsedTimeSeconds))/allowedTime);
-        console.log((allowedTime - Math.floor(elapsedTimeSeconds))/allowedTime);
+        // console.log((allowedTime - Math.floor(elapsedTimeSeconds))/allowedTime);
         if (scoreChange < 0) {
             scoreChange = 0;
         }
-        console.log(scoreChange)
+        // console.log(scoreChange)
         score += scoreChange;
 
         spawnRequired = true;
@@ -57,6 +57,7 @@ function playGame() {
         if (score > 100 && score <= 300) {
             allowedTime = 5;
         } else if (score > 300) {
+            // console.log("score greater than 300");
             allowedTime = 3;
         }
     
