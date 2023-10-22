@@ -54,10 +54,9 @@ window.requestAnimationFrame(playGame);
 function playGame() {
 
     if (ifStartGame) {
-        if (score > 100) {
+        if (score > 100 && score <= 300) {
             allowedTime = 5;
-        }
-        if (score > 300) {
+        } else if (score > 300) {
             allowedTime = 3;
         }
     
