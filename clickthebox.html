@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Click The Boxes</title>
+</head>
+<body>
+    <div class="game-intro" id="game-intro">
+        <div class="game-intro-content">
+            Click on the <span>green</span> box.<br>Inside the box is the time left to click it.
+            <br>The faster you click on the box, the higher the score increment.
+            <br>As your score increases, the time allowed to click on the box decreases.<br><br> 
+            <button id="startbutton" onclick="startGame()">Start</button>
+        </div>
+    </div>
+    <div class="button-container" id="button-container"></div>
+    <div class="score" id="score"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

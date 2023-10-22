@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+.target-button {
+    width: 4vw;
+    height: 4vw;
+    margin: 0.2vw;
+    /* text-align: center; */
+    background-color: #adb5bd;
+    border: none;
+    border-radius: 0.3vw;
+    padding: 0;
+    font-size: 1vw;
+}
+
+.button-container {
+    align-items: center; 
+    text-align: center;
+    margin-top: 1.5%;
+    /* display: block; */
+}
+
+/* .buttonrow {
+    align-items: center; 
+    text-align: center; 
+    border: 1px solid black;
+} */
+
+.score {
+    display: block;
+    text-align: center;
+    font-size: 3vw;
+}
+
+.game-intro {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: black;
+    background-color: rgba(0,0,0,0.45);
+
+}
+
+.game-intro-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 3vw 1vw;
+    /* border: 1px solid black; */
+    width: 40%;
+    text-align: center;
+    font-size: 1vw;
+    border-radius: 1vw;
+
+}
+
+#startbutton {
+    background-color: rgba(32, 139, 58, 1);
+    border: none;
+    font-size: 120%;
+    padding: 0.5vw;
+    width: 5vw;
+    height: 5vw;
+    text-align: center;
+    border-radius: 0.5vw;
+
+}
+
+#startbutton:hover {
+    background-color: #60d17c;
+}
+
+#examplebutton {
+    background-color: rgba(32, 139, 58, 1);
+    border: none;
+    font-size: 1vw;
+    padding: 0.5vw;
+    width: 5vw;
+    height: 5vw;
+    text-align: center;
+    border-radius: 0.5vw;
+}
+
+span {
+    color: rgba(32, 139, 58, 1);
+}
