@@ -56,7 +56,8 @@ function playGame() {
     if (ifStartGame) {
         if (score > 100) {
             allowedTime = 5;
-        } else if (score > 300) {
+        }
+        if (score > 300) {
             allowedTime = 3;
         }
     
