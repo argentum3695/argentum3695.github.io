@@ -24,6 +24,7 @@
 
 .main {
     margin-top: 7%;
+    margin-bottom: 3vw;
 
 }
 
@@ -63,4 +64,35 @@ a:hover {
 
   ::selection {
     background: var(--accent);
+  }
+
+  .projectbox {
+    color: var(--text);
+    border: 0.15vw solid white;
+    width: 20vw;
+    height: 10vw;
+    border-radius: 1vw;
+    transition: 0.2s;
+    margin: auto;
+    padding: 1vw;
+    margin-bottom: 1vw;
+    display: inline-block;
+    margin-left: 0.25vw;
+    margin-right: 0.25vw;
+  }
+
+  .projectbox:hover{
+    transform: translate(0, -0.5vw);
+    border-color: var(--primary);
+    cursor: pointer;
+  }
+
+  .boxheading {
+    margin-top: 1vw;
+    font-size: 1.5vw;
+    color: var(--primary);
+  }
+
+  .boxcontent {
+    font-size: 1vw;
   }

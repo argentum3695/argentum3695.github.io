@@ -15,8 +15,17 @@
   </div>
 
   <div class="projects" id="projects">
-      <a href="pigame.html">pi game</a><br>
-      <a href="clickthebox.html">Click the Boxes</a>
+      <!-- <a href="pigame.html">pi game</a><br>
+      <a href="clickthebox.html">Click the Boxes</a> -->
+      <div onclick="window.open('pigame.html', '_blank');" class="projectbox" id="projectbox1">
+        <p class="boxheading">pigame</p>
+        <p class="boxcontent">A game where you type pi. That's actually it.</p>
+      </div>
+
+      <div onclick="window.open('clickthebox.html', '_blank');" class="projectbox" id="projectbox2">
+        <p class="boxheading">Click the Box</p>
+        <p class="boxcontent">Click on the green boxes that appear as fast as you can!</p>
+      </div>
   </div>
     <script src="script.js"></script>
 </body>
