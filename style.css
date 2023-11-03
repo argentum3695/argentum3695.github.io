@@ -69,8 +69,8 @@ a:hover {
   .projectbox {
     color: var(--text);
     border: 0.15vw solid white;
-    width: 20vw;
-    height: 10vw;
+    width: 20%;
+    height: 20%;
     border-radius: 1vw;
     transition: 0.2s;
     margin: auto;
@@ -89,10 +89,10 @@ a:hover {
 
   .boxheading {
     margin-top: 1vw;
-    font-size: 1.5vw;
+    font-size: 125%;
     color: var(--primary);
   }
 
   .boxcontent {
-    font-size: 1vw;
+    font-size: 100%;
   }

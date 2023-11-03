@@ -3,9 +3,12 @@ var spawnRequired = true;
 var score = 0;
 var buttonSpawnTime;
 var defScoreIncrement = 10;
-var allowedTime = 10;
+var allowedTime = 2;
 var showTime = true;
 var ifStartGame = false;
+var spawnTime = Date.now();
+var gameOver = false;
+let req;
 
 function createButtons() {
     for (i = 0; i < 10; i ++) {
@@ -35,52 +38,63 @@ function getButtonPress(buttonID) {
 
 
         scoreChange = defScoreIncrement * ((allowedTime - Math.floor(elapsedTimeSeconds))/allowedTime);
-        // console.log((allowedTime - Math.floor(elapsedTimeSeconds))/allowedTime);
+        console.log((allowedTime - Math.floor(elapsedTimeSeconds))/allowedTime);
         if (scoreChange < 0) {
             scoreChange = 0;
         }
-        // console.log(scoreChange)
+        console.log(scoreChange)
         score += scoreChange;
-
+        
         spawnRequired = true;
+        spawnTime = Date.now() + (Math.random()*5000);
     }
 }
 
 
 
 createButtons();
-window.requestAnimationFrame(playGame);
+req = window.requestAnimationFrame(playGame);
 
 function playGame() {
 
     if (ifStartGame) {
-        if (score > 100 && score <= 300) {
-            allowedTime = 5;
-        } else if (score > 300) {
-            // console.log("score greater than 300");
-            allowedTime = 3;
+       if (score > 300) {
+            allowedTime = 1.5;
         }
     
     
         if (spawnRequired) {
-            setTarget();
-            spawnRequired = 0;
+            if (Date.now() > spawnTime) {
+                setTarget();
+                spawnRequired = 0;
+            }
         }
     
         elapsedTime = (Date.now() - buttonSpawnTime)/1000;
         remainingTime = allowedTime - Math.floor(elapsedTime);
         if (showTime) {
-            document.getElementById(targetButtonID).innerHTML = remainingTime;
+            if (!spawnRequired) {
+                document.getElementById(targetButtonID).innerHTML = remainingTime;
+            } else {
+                document.getElementById(targetButtonID).innerHTML = "&nbsp";
+            }
         }
-    
-        if (elapsedTime > allowedTime) {
+        
+        if ((elapsedTime > allowedTime) && !spawnRequired) {
             document.getElementById(targetButtonID).innerHTML = "&nbsp";
-            spawnRequired = true;
+            // spawnRequired = true;
+            gameOver = true;
+            cancelAnimationFrame(req);
+            endScreen();
+
         }
     
     
-    
-        updateButtonColour(targetButtonID, elapsedTime);
+        if (!spawnRequired) {
+            updateButtonColour(targetButtonID, elapsedTime);
+        } else {
+            document.getElementById(targetButtonID).style.backgroundColor = "#adb5bd";
+        }
     
         document.getElementById("score").innerText = Math.round(score);
     }
@@ -88,7 +102,7 @@ function playGame() {
 
 
 
-    window.requestAnimationFrame(playGame);
+    req = window.requestAnimationFrame(playGame);
 }
 
 
@@ -102,6 +116,7 @@ function setTarget() {
 }
 
 function updateButtonColour(targetID, elapsedTime) {
+
     proportionDone = elapsedTime/allowedTime;
     if (proportionDone <= 1) {
         document.getElementById(targetID).style.backgroundColor = "rgba(32, 139, 58," + (1- proportionDone) + ")";
@@ -115,4 +130,11 @@ function updateButtonColour(targetID, elapsedTime) {
 function startGame() {
     ifStartGame = true;
     document.getElementById("game-intro").style.display = "none";
+}
+
+function endScreen() {
+    document.getElementById("button-container").style.display = "none";
+    document.getElementById("endmessage").style.display = "block";
+    document.getElementById("reload").style.display = "block";
+
 }
