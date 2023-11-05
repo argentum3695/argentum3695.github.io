@@ -6,85 +6,59 @@ ctx.strokeStyle = "black";
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-var craftY = canvas.height/2;
+var craftY = canvas.height / 2;
 
+var first = true;
 var downArrowPressed;
 var upArrowPressed;
 var leftArrowPressed;
 var rightArrowPressed;
-
+var xvel = 0;
+var yvel = 0;
 
 var asteroidx = canvas.width;
-var asteroidy = canvas.height/2;
+var asteroidy = canvas.height / 2;
 
 document.body.addEventListener("keydown", getKeyDown);
 document.body.addEventListener("keyup", getKeyUp);
 
-// class asteroid {
-//     constructor(x,y, width, height) {
-//         this.xcoord = x;
-//         this.ycoord = y;
-//         this.width = width;
-//         this.height = height;
-//     }   
-// }
-
-
+var prevTime = 0;
 var asteroidRenderList = [];
-
-// asteroid1 = new asteroid(canvas.width, 500, 100, 100);
-
-// for (i = 0; i <=5; i++) {
-//     ('asteroid' + i) = new asteroid(canvas.width, 500, 100, 100); 
-//     asteroidRenderList.push(('asteroid' + i));
-// }
-// asteroidRenderList.push(asteroid1);
+var stars = [];
 
 prevx = 0;
+
+asteroidRenderList.push({ initxcoord: 0, xcoord: 0, ycoord: 0, width: 0, height: 0 })
 for (i = 0; i < 1000; i++) {
 
-    genx = 1000 + prevx + Math.floor(Math.random()*1000);
+    genx = 1000 + prevx + Math.floor(Math.random() * 1000);
     prevx = genx
-    geny = Math.floor(Math.random()*800)
+    geny = Math.floor(Math.random() * 800)
 
-    genwidth = 10 + Math.floor(Math.random()*200);
+    genwidth = 10 + Math.floor(Math.random() * 200);
     genheight = genwidth;
 
-    asteroidRenderList.push({initxcoord:genx, xcoord:genx, ycoord:geny, width:genwidth, height:genheight});
+    asteroidRenderList.push({ initxcoord: genx, xcoord: genx, ycoord: geny, width: genwidth, height: genheight });
 }
 
-// asteroidRenderList.push({xcoord:1920, ycoord:500, width:100, height:100});
-
-// console.log(asteroidRenderList);
-
-
-
-
+createStars();
 
 function getKeyDown(keyEvent) {
 
-    
+
     if (`${keyEvent.code}` == "ArrowDown") {
-        // console.log("detecting arrow down");
         downArrowPressed = true;
         keyEvent.preventDefault();
-
     }
     if (`${keyEvent.code}` == "ArrowUp") {
-        // console.log("detecting arrow up");
         upArrowPressed = true;
         keyEvent.preventDefault();
-
     }
     if (`${keyEvent.code}` == "ArrowLeft") {
-        // console.log("detecting arrow left");
         leftArrowPressed = true;
         keyEvent.preventDefault();
-
     }
     if (`${keyEvent.code}` == "ArrowRight") {
-        // console.log("detecting arrow right");
-
         rightArrowPressed = true;
         keyEvent.preventDefault();
     }
@@ -93,9 +67,6 @@ function getKeyDown(keyEvent) {
         spacePressed = true;
         keyEvent.preventDefault();
     }
-
-
-
 }
 
 
@@ -104,31 +75,25 @@ function getKeyUp(keyEvent) {
     if (`${keyEvent.code}` == "ArrowDown") {
         downArrowPressed = false;
         keyEvent.preventDefault();
-
     }
     if (`${keyEvent.code}` == "ArrowUp") {
         upArrowPressed = false;
         keyEvent.preventDefault();
-
     }
     if (`${keyEvent.code}` == "ArrowLeft") {
         leftArrowPressed = false;
         keyEvent.preventDefault();
-
     }
     if (`${keyEvent.code}` == "ArrowRight") {
         console.log("right arrow released");
         rightArrowPressed = false;
         keyEvent.preventDefault();
-
     }
 
     if (`${keyEvent.code}` == "Space") {
         spacePressed = false;
         keyEvent.preventDefault();
     }
-
-
 }
 
 
@@ -139,62 +104,106 @@ req = window.requestAnimationFrame(playGame);
 function playGame(timestamp) {
 
     currTime = Date.now();
+    if (first) {
+        prevTime = Date.now();
+        first = false;
+    }
+    timeDiff = currTime - prevTime;
 
     duration = currTime - zeroTime;
-    console.log(`Elapsed time: ${duration/1000} seconds`)
 
-    for (i in asteroidRenderList) {
-        // console.log(asteroidRenderList[i].xcoord);
-        asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
+    craftY += yvel * (timeDiff / 1000);
+    console.log(asteroidRenderList[0].xcoord);
+    if (asteroidRenderList[0].xcoord <= 0) {
+
+        for (i in asteroidRenderList) {
+            // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
+            asteroidRenderList[i].xcoord -= xvel * (timeDiff / 1000);
+        }
     }
 
-    asteroidx = canvas.width - (350 * (duration/1000))
-    
+    if (asteroidRenderList[0].xcoord <= 0) {
+        for (i in stars) {
+            // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
+            stars[i].starX -= xvel * (timeDiff / 1000);
+        }
+    }
 
-
+    if (asteroidRenderList[0].xcoord > 0) {
+        xvel = 0;
+        for (i in asteroidRenderList) {
+            // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
+            asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord;
+        }
+    }
 
     if (downArrowPressed) {
-        craftY+= 5;
+        yvel += 10;
     }
 
     if (upArrowPressed) {
-        craftY -=5;
+        yvel -= 10;
     }
 
-    ctx.clearRect(0,0, canvas.width, canvas.height);
-    
-    ctx.beginPath();
-    ctx.fillRect(canvas.width/2 - 20, craftY, 20, 20);
+    if (rightArrowPressed) {
+        xvel += 10;
+    }
 
+    if (leftArrowPressed) {
+        xvel -= 10;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    drawStars();
+
+    ctx.beginPath();
+    ctx.fillStyle = "white";
+    ctx.fillRect(canvas.width / 2 - 20, craftY, 20, 20);
+
+    ctx.fillStyle = "grey"
     for (i in asteroidRenderList) {
-        // console.log(asteroidRenderList[i].xcoord);
         ctx.fillRect(asteroidRenderList[i].xcoord, asteroidRenderList[i].ycoord, asteroidRenderList[i].width, asteroidRenderList[i].height);
     }
 
     for (i in asteroidRenderList) {
-        // console.log(asteroidRenderList[i].xcoord);
-        if (detectCollision(canvas.width/2 - 20, craftY, asteroidRenderList[i].xcoord,asteroidRenderList[i].ycoord, 20, 20, asteroidRenderList[i].width, asteroidRenderList[i].height)) {
+        if (detectCollision(canvas.width / 2 - 20, craftY, asteroidRenderList[i].xcoord, asteroidRenderList[i].ycoord, 20, 20, asteroidRenderList[i].width, asteroidRenderList[i].height)) {
             document.getElementById("canvas").style.display = "none";
             document.getElementById("endgame").style.display = "block";
             cancelAnimationFrame(req);
         }
     }
-
-
-
     ctx.stroke();
+
     req = window.requestAnimationFrame(playGame);
+    prevTime = currTime;
 }
 
 
 function detectCollision(x1, y1, x2, y2, width1, height1, width2, height2) {
-    if (((x1 +width1 > x2) && (x1 + width1 < (x2 + width2)) && (y1 + height1 > y2) && (y1 + height1 < y2 + height2))) {
+    if (((x1 + width1 > x2) && (x1 + width1 < (x2 + width2)) && (y1 + height1 > y2) && (y1 + height1 < y2 + height2))) {
         return true;
     } else {
         return false;
     }
-       
+}
 
+function createStars() {
+    ctx.fillStyle = "white";
+    for (i = 0; i < 8000; i++) {
+        x = Math.floor(Math.random() * (canvas.width * 10));
+        y = Math.floor(Math.random() * (canvas.height * 10));
+        stars.push({ starX: x, starY: y });
+    }
+}
+
+function drawStars() {
+    ctx.fillStyle = "white";
+    for (i = 0; i < stars.length; i++) {
+        ctx.fillRect(stars[i].starX, stars[i].starY, 2, 2);
+    }
 }
 
 

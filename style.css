@@ -123,7 +123,7 @@ a:hover {
 
 
   @media screen and (max-width: 800px) {
-    .projectbox {
+    .projectbox, .firstprojectbox {
       width: 90%; 
     }
   }
