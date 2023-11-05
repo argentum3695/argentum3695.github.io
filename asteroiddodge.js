@@ -138,11 +138,11 @@ function playGame(timestamp) {
     }
 
     if (downArrowPressed) {
-        yvel += 10;
+        yvel += 7;
     }
 
     if (upArrowPressed) {
-        yvel -= 10;
+        yvel -= 7;
     }
 
     if (rightArrowPressed) {
