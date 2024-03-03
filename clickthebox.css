@@ -60,7 +60,7 @@
 
 }
 
-#startbutton {
+#startbutton, #reload {
     background-color: rgba(32, 139, 58, 1);
     border: none;
     font-size: 120%;
@@ -90,3 +90,17 @@
 span {
     color: rgba(32, 139, 58, 1);
 }
+
+#endmessage {
+    display: none;
+    text-align: center;
+    font-size: 3em;
+}
+
+#reload {
+    display: none;
+    text-align: center;
+    margin: auto;
+}
+
+

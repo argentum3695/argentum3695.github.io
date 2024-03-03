@@ -24,6 +24,7 @@
 
 .main {
     margin-top: 7%;
+    margin-bottom: 3vw;
 
 }
 
@@ -63,4 +64,66 @@ a:hover {
 
   ::selection {
     background: var(--accent);
+  }
+
+  .projectbox {
+    
+    color: var(--text);
+    border: 0.15vw solid white;
+    width: 20vw;
+    height: 12vw;
+    border-radius: 1vw;
+    transition: 0.2s;
+    margin: auto;
+    padding: 1vw;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: block;
+    margin-left: 0.25vw;
+    margin-right: 0.25vw;
+    float: left;
+    text-align: center;
+  }
+
+  .firstprojectbox {
+    
+    color: var(--text);
+    border: 0.15vw solid white;
+    width: 20vw;
+    height: 12vw;
+    border-radius: 1vw;
+    transition: 0.2s;
+    margin: auto;
+    padding: 1vw;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: block;
+    margin-left: 0.25vw;
+    margin-right: 0.25vw;
+    float: left;
+    margin-left: 15vw;
+    text-align: center;
+  }
+
+  .projectbox:hover, .firstprojectbox:hover{
+    transform: translate(0, -0.5vw);
+    border-color: var(--primary);
+    cursor: pointer;
+  }
+
+  .boxheading {
+    margin-top: 1vw;
+    font-size: 125%;
+    color: var(--primary);
+  }
+
+  .boxcontent {
+    font-size: 1rem;
+  }
+
+
+  @media screen and (max-width: 800px) {
+    .projectbox, .firstprojectbox {
+      width: 90%; 
+    }
   }
