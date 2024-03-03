@@ -1,0 +1,41 @@
+.pidigit {
+    border: 1px solid black;
+    width: 4cm;
+    height: 4cm;
+    font-family: 'Courier New', Courier, monospace;
+    /* text-align: center; */
+    /* padding-top: 2cm;
+    padding-bottom: 1cm; */
+    /* padding-top: 2cm; */
+    /* margin: 1cm; */
+
+    /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  display: inline;
+float: left;
+ 
+    
+}
+
+.pidigit p{
+    /* border: 1px solid black; */
+    /* margin: 0; */
+    font-size: 2cm;
+    /* padding: 0; */
+    /* left: 50%;
+    transform: translate(-50%); */
+    margin: auto;
+    text-align: center;
+   padding: 1cm 0;
+    
+}
+
+
+
+@media print  
+{
+    div {
+        page-break-inside: avoid;
+    }
+}
