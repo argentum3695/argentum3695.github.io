@@ -7,6 +7,8 @@ tenkdigitsofpi = "3.141592653589793238462643383279502884197169399375105820974944
 
 digits = parseInt(prompt("Decimal places to print:"));
 
+counter = 0;
 for (i = 0; i< (2 + digits); i++) {
-    document.getElementById('main').innerHTML += "<div class='pidigit'><p>" + tenkdigitsofpi[i] + "</p></div>"
+    counter++;
+    document.getElementById('main').innerHTML += "<div class='pidigit'><p class='pidigitp'>" + tenkdigitsofpi[i] + "</p><p class='digitcount'>"+counter+"</p></div>"
 }

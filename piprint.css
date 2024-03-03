@@ -18,7 +18,7 @@ float: left;
     
 }
 
-.pidigit p{
+.pidigitp{
     /* border: 1px solid black; */
     /* margin: 0; */
     font-size: 2cm;
@@ -27,7 +27,8 @@ float: left;
     transform: translate(-50%); */
     margin: auto;
     text-align: center;
-   padding: 1cm 0;
+   padding-top: 1cm;
+   padding-bottom: 0;
     
 }
 
@@ -38,4 +39,12 @@ float: left;
     div {
         page-break-inside: avoid;
     }
+}
+
+.digitcount{
+    text-align: center;
+    font-size: 0.25cm;
+    margin: 0.125cm;
+    padding: 0;
+    color: #c9c9c9;
 }
