@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="when.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="lettera.ico">
+
+    <title>When?</title>
+</head>
+
+<body>
+    <p id="test"></p>
+    <div id="eventboxcontainer" class="eventboxcontainer"></div>
+
+   
+
+    <div class="settings">
+        <button class="settingsbutton" id="settingsbutton"><i class="fa fa-gear"></i></button>
+    </div>
+
+    <div id="modal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+
+            <p id="modalheading">Settings</p>
+            <button id="shownewdatemenu" onclick="showDateMenu()">Show New Date Menu</button>
+            <div id="newdatemenu">
+                <input type="date" id="datepicker" name="datepicker">
+                <button onclick="addDate()">Add Date</button>
+
+            </div>
+            <br>
+            <button id="cleardates" onclick="removeDates();">Remove All Dates</button>
+
+        </div>
+    </div>
+
+    <script src="when.js"></script>
+
+
+</body>
+
+</html>

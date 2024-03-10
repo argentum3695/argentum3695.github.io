@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: "Work Sans", Arial, sans-serif;
+}
+
+
+#newdatemenu {
+    display: none;
+}
+
+.eventbox {
+    text-align: center;
+    /* display: inline-block; */
+    margin: 5rem;
+}
+
+.days {
+    font-size: 4rem;
+    margin: 0;
+}
+
+
+.datename {
+ font-size: 2rem;
+ margin-bottom: 0.5rem;
+ /* font-weight: bold; */
+}
+
+.dayslabel {
+    margin-top: 0;
+    font-size: 1.75rem;
+    text-transform: uppercase;
+}
+
+.eventboxcontainer {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 40%;
+    height: 30%;
+    overflow: auto;
+    border: 1px solid black;
+    margin: 15% 30%;
+    padding: 10px;
+    background-color: #eff0f3;
+    border-radius: 20px;
+    animation-name: modalanimation;
+    animation-duration: 0.4s;
+    animation-duration: 0.4s;
+    margin-left: 29%;
+
+}
+
+.modal-content {
+    background-color: #eff0f3;
+    margin: 0% auto;
+    padding: 20px;
+    width: 80%;
+    text-align: center;
+}
+
+.settingsbutton {
+    font-size: 50px;
+    border: none;
+    background-color: transparent;
+    position: fixed;
+    margin-left: 93%;
+    margin-top: 0;
+    color: #ff8e3c;
+    cursor: pointer;
+}
+
+.close
+ {
+    color: #aaa;
+    float: right;
+    font-size: 60px;
+    /* font-weight: bold; */
+    margin-right: 15px;
+    background-color: #eff0f3;
+
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+@keyframes modalanimation {
+    from {
+        top: -300px;
+        opacity: 0
+    }
+
+    to {
+        top: 0;
+        opacity: 1
+    }
+}
+
+#modalheading {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.modal-content button {
+    margin: 0.5rem;
+}
