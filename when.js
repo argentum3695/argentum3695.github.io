@@ -2,7 +2,7 @@ const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
-const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 keyslist = Object.keys(localStorage);
 renderList = [];
@@ -34,6 +34,7 @@ function updateEventBoxes() {
         document.getElementById('days' + (i + 1)).innerText = renderList[i].daysleft;
 
         const printDate = new Date(renderList[i].enddate);
+        // console.log(printDate.getDay())
         formattedDate = dayNames[printDate.getDay()] + ", " + monthNames[printDate.getMonth()] + " " + printDate.getDate() + " " + printDate.getFullYear();
         document.getElementById('eventdate' + (i + 1)).innerText = formattedDate;
 
@@ -51,7 +52,7 @@ function updateRenderList() {
         renderList.push({ name: keyslist[i].replace('#', ' '), daysleft: dateDiffDays, enddate: endDate });
 
 
-        console.log(renderList);
+        // console.log(renderList);
 
         
     }
@@ -78,7 +79,7 @@ function updateRenderList() {
 
         localStorage.setItem(datename.replace(" ", "#"), document.getElementById('datepicker').value);
         keyslist = Object.keys(localStorage);
-        console.log(keyslist)
+        // console.log(keyslist)
         makeEventBoxes();
         hideDateMenu();
     }
