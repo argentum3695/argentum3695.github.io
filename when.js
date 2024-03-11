@@ -103,3 +103,12 @@ function updateRenderList() {
     span.onclick = function () {
         modal.style.display = "none";
     }
+
+
+    function changebg() {
+       imgurl = prompt("Image url: ");
+       if (imgurl) {
+        document.body.style.backgroundImage = "url(" + imgurl + ")";
+       }
+
+    }
