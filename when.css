@@ -13,6 +13,7 @@
     text-align: center;
     /* display: inline-block; */
     margin: 5rem;
+
 }
 
 .days {
@@ -23,14 +24,17 @@
 
 .datename {
  font-size: 2rem;
+ margin: auto;
  margin-bottom: 0.5rem;
+ /* width: 3rem; */
+ /* text-align: center; */
  /* font-weight: bold; */
 }
 
 .dayslabel {
     margin-top: 0;
     font-size: 1.75rem;
-    text-transform: uppercase;
+    /* text-transform: capitalize; */
 }
 
 .eventboxcontainer {
@@ -75,8 +79,8 @@
     background-color: transparent;
     position: fixed;
     margin-left: 93%;
-    margin-top: 0;
-    color: #ff8e3c;
+    margin-top: 1rem;
+    color: black;
     cursor: pointer;
 }
 
@@ -117,4 +121,8 @@
 
 .modal-content button {
     margin: 0.5rem;
+}
+
+.eventdate{
+    color: #aaa;
 }

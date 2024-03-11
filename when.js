@@ -1,98 +1,104 @@
-// if (!localStorage.testvar) {
-//     localStorage.setItem('testvar', 1);
-// } else {
-//     localStorage.testvar = Number(localStorage.testvar) + 1;
-// }
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
 
-// document.getElementById("test").innerHTML = localStorage.getItem("testvar");
-
-// userDate = prompt("Set a date: ");
-// localStorage.setItem('date1', userDate);
+const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 keyslist = Object.keys(localStorage);
-// console.log(keyslist);
+renderList = [];
 
 makeEventBoxes();
 
 setInterval(() => {
     keyslist = Object.keys(localStorage);
+    updateRenderList();
     updateEventBoxes();
 
-    
-}, 1000); 
+
+}, 1000);
 
 
 function makeEventBoxes() {
     document.getElementById("eventboxcontainer").innerHTML = '';
 
-    
 
-    for (i = 0; i<keyslist.length; i++) {
-        document.getElementById("eventboxcontainer").innerHTML += "<div class='eventbox'id='eventbox" + (i+1) + "'><p id='datename"+ (i+1) + "' class='datename'></p><p id='days" + (i+1) + "' class='days'></p><p class='dayslabel'>days</p></div>"
+
+    for (i = 0; i < keyslist.length; i++) {
+        document.getElementById("eventboxcontainer").innerHTML += "<div class='eventbox'id='eventbox" + (i + 1) + "'><p id='datename" + (i + 1) + "' class='datename'></p><p id='days" + (i + 1) + "' class='days'></p><p class='dayslabel'>days</p><p id='eventdate" + (i + 1) + "' class='eventdate'></p></div>"
     }
 }
 
 function updateEventBoxes() {
+    for (i = 0; i < keyslist.length; i++) {
+        document.getElementById('datename' + (i + 1)).innerText = renderList[i].name;
+        document.getElementById('days' + (i + 1)).innerText = renderList[i].daysleft;
+
+        const printDate = new Date(renderList[i].enddate);
+        formattedDate = dayNames[printDate.getDay()] + ", " + monthNames[printDate.getMonth()] + " " + printDate.getDate() + " " + printDate.getFullYear();
+        document.getElementById('eventdate' + (i + 1)).innerText = formattedDate;
+
+    }
+}
+
+function updateRenderList() {
     const currDate = new Date();
-    for (i = 0; i<keyslist.length; i++) {
+    renderList = [];
+    for (i = 0; i < keyslist.length; i++) {
         endDate = new Date(localStorage.getItem(keyslist[i]));
-        // console.log(localStorage.getItem(keyslist[i]));
         dateDiff = Math.abs(currDate - endDate);
         dateDiffDays = Math.ceil((dateDiff / (1000 * 60 * 60 * 24)));
 
-        document.getElementById('datename' + (i + 1)).innerText = keyslist[i].replace('#', ' ');
-        document.getElementById('days' + (i + 1)).innerText = dateDiffDays;
-}
-}
+        renderList.push({ name: keyslist[i].replace('#', ' '), daysleft: dateDiffDays, enddate: endDate });
 
 
+        console.log(renderList);
 
-
-
-
-// function printdate() {
-//     console.log(document.getElementById("birthday").value);
-//     testDate = new Date(document.getElementById("birthday").value);
-//     console.log(testDate);
-// }
-
-
-
-
-function showDateMenu() {
-    document.getElementById("newdatemenu").style.display = "inline";
-}
-
-function hideDateMenu() {
-    document.getElementById("newdatemenu").style.display = "none";
-}
-
-function addDate() {
-    datename = prompt("add a date name: ");
-    
-    localStorage.setItem(datename.replace(" ", "#"), document.getElementById('datepicker').value);
-    keyslist = Object.keys(localStorage);
-    console.log(keyslist)
-    makeEventBoxes();
-    hideDateMenu();
-}
-
-function removeDates() {
-    localStorage.clear();
-    keyslist = Object.keys(localStorage);
-    makeEventBoxes();
+        
+    }
+    renderList.sort(function (a, b) {
+        return a.daysleft - b.daysleft;
+    })
 }
 
 
-var modal = document.getElementById("modal");
-var button = document.getElementById("settingsbutton");
-var span = document.getElementsByClassName("close")[0];
 
 
-button.onclick = function () {
-    modal.style.display = "block";
-}
+    function showDateMenu() {
+        document.getElementById("newdatemenu").style.display = "inline";
+        document.getElementById("shownewdatemenu").style.display = "none";
+    }
 
-span.onclick = function () {
-    modal.style.display = "none";
-}
+    function hideDateMenu() {
+        document.getElementById("newdatemenu").style.display = "none";
+        document.getElementById("shownewdatemenu").style.display = "inline";
+    }
+
+    function addDate() {
+        datename = prompt("add a date name: ");
+
+        localStorage.setItem(datename.replace(" ", "#"), document.getElementById('datepicker').value);
+        keyslist = Object.keys(localStorage);
+        console.log(keyslist)
+        makeEventBoxes();
+        hideDateMenu();
+    }
+
+    function removeDates() {
+        localStorage.clear();
+        keyslist = Object.keys(localStorage);
+        makeEventBoxes();
+    }
+
+
+    var modal = document.getElementById("modal");
+    var button = document.getElementById("settingsbutton");
+    var span = document.getElementsByClassName("close")[0];
+
+
+    button.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
