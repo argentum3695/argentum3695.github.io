@@ -4,26 +4,33 @@ const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 
 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+// localStorage.setItem('bgimage', 'https://images.unsplash.com/photo-1709410281189-be62ad02e9d6?q=80&w=2832&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+// document.getElementById("eventboxcontainer").style.backgroundImage =  "url(" + localStorage.getItem('bgimage');
+// + ")";
+
 keyslist = Object.keys(localStorage);
 renderList = [];
 
 makeEventBoxes();
 
+if (keyslist.length == 0) {
+    document.getElementById('tooltiptext').style.visibility = 'visible';
+} else {
+    document.getElementById('tooltiptext').style.visibility = 'hidden';
+
+}
+
 setInterval(() => {
+
     keyslist = Object.keys(localStorage);
     updateRenderList();
     updateEventBoxes();
-
-
 }, 1000);
 
 
 function makeEventBoxes() {
     document.getElementById("eventboxcontainer").innerHTML = '';
-
-
-
-    for (i = 0; i < keyslist.length; i++) {
+    for (i = 0; i < keyslist.length ; i++) {
         document.getElementById("eventboxcontainer").innerHTML += "<div class='eventbox'id='eventbox" + (i + 1) + "'><p id='datename" + (i + 1) + "' class='datename'></p><p id='days" + (i + 1) + "' class='days'></p><p class='dayslabel'>days</p><p id='eventdate" + (i + 1) + "' class='eventdate'></p></div>"
     }
 }
@@ -45,6 +52,7 @@ function updateRenderList() {
     const currDate = new Date();
     renderList = [];
     for (i = 0; i < keyslist.length; i++) {
+        if (keyslist[i] != 'bgimage') {
         endDate = new Date(localStorage.getItem(keyslist[i]));
         dateDiff = Math.abs(currDate - endDate);
         dateDiffDays = Math.ceil((dateDiff / (1000 * 60 * 60 * 24)));
@@ -54,7 +62,7 @@ function updateRenderList() {
 
         // console.log(renderList);
 
-        
+        }
     }
     renderList.sort(function (a, b) {
         return a.daysleft - b.daysleft;
@@ -82,12 +90,19 @@ function updateRenderList() {
         // console.log(keyslist)
         makeEventBoxes();
         hideDateMenu();
+        updateRenderList();
+        makeDateDropdown();
+
+        document.getElementById('tooltiptext').style.visibility = 'hidden';
+
     }
 
     function removeDates() {
         localStorage.clear();
         keyslist = Object.keys(localStorage);
         makeEventBoxes();
+        updateRenderList();
+        makeDateDropdown();
     }
 
 
@@ -98,6 +113,7 @@ function updateRenderList() {
 
     button.onclick = function () {
         modal.style.display = "block";
+        makeDateDropdown();
     }
 
     span.onclick = function () {
@@ -105,10 +121,37 @@ function updateRenderList() {
     }
 
 
-    function changebg() {
-       imgurl = prompt("Image url: ");
-       if (imgurl) {
-        document.body.style.backgroundImage = "url(" + imgurl + ")";
-       }
+    // function changebg() {
+    //    imgurl = prompt("Image url: ");
+    //    if (imgurl) {
+    //     localStorage.setItem('bgimage', imgurl)
+    //     document.getElementById("eventboxcontainer").style.backgroundImage = "url(" + imgurl + ")";
+
+    //    }
+
+    // }
+
+    function makeDateDropdown() {
+        document.getElementById('selectcontainer').innerHTML = '';
+        var selectContainer = document.getElementById('selectcontainer');
+
+
+        for (i=0; i<keyslist.length; i++) {
+            var selectOption = document.createElement('option');
+            var textnode = document.createTextNode(renderList[i].name);
+            selectOption.appendChild(textnode);
+            selectContainer.appendChild(selectOption);
+        }
+    }
+
+    function removeSelectedDate() {
+        selectedDate = document.getElementById('selectcontainer').value;
+        // console.log(selectedDate);
+        localStorage.removeItem(selectedDate);
+        keyslist = Object.keys(localStorage);
+        makeEventBoxes();
+        updateRenderList();
+        makeDateDropdown();
 
     }
+

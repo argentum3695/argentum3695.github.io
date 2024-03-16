@@ -13,6 +13,7 @@
 
 <body>
     <div class="settings">
+        <span id="tooltiptext" class="tooltiptext">Add a new date here!</span>
         <button class="settingsbutton" id="settingsbutton"><i class="fa fa-gear"></i></button>
     </div>
     <div id="eventboxcontainer" class="eventboxcontainer"></div>
@@ -22,9 +23,11 @@
     
 
     <div id="modal" class="modal">
-        <span class="close">&times;</span>
+        
         <div class="modal-content">
-
+            <span class="close">&times;</span>
+            <br>
+<div id="modal-content-inside">
             <p id="modalheading">Settings</p>
             <button id="shownewdatemenu" onclick="showDateMenu()">Show New Date Menu</button>
             <div id="newdatemenu">
@@ -32,10 +35,16 @@
                 <button onclick="addDate()">Add Date</button>
 
             </div>
-            <br>
-            <button id="cleardates" onclick="removeDates();">Remove All Dates</button>
-            <button id="changebg" onclick="changebg()">Change Background Image</button>
+            <br><hr>
+            <h3>Remove a date</h3>
+            <select id="selectcontainer"></select>
+            <button id="removedate" onclick="removeSelectedDate()">Remove Date</button>    
 
+
+            <br>
+            <button id="cleardates" onclick="removeDates();">Remove All Dates</button> <br>
+            <!-- <button id="changebg" onclick="changebg()">Change Background Image</button> -->
+        </div>
         </div>
     </div>
 

@@ -4,17 +4,46 @@
     font-family: "Work Sans", Arial, sans-serif;
 }
 
+:root {
+    --light-text-color: black;
+    --dark-text-color: #fbf9ff;
+    --light-bg-color: #fbf9ff;
+    --dark-bg-color: #232323;
+  }
+
+
+body {
+    margin: 0;
+    /* background-image: linear-gradient(135deg, #0096c7, #caf0f8); */
+    background-color: var(--dark-bg-color);
+}
 
 #newdatemenu {
     display: none;
 }
 
 .eventbox {
+    
     text-align: center;
     /* display: inline-block; */
     margin: 5rem;
+    height:fit-content;
+
+
+    /* backdrop-filter: blur(10px); */
+
+
+    /* background: rgba(0,0,1,0.5); */
+  /* backdrop-filter: saturate(150%) blur(10px); */
+
+    /* border: 1px solid black; */
+    padding: 1rem;
+    border-radius: 1rem;
+
 
 }
+
+
 
 .days {
     font-size: 4rem;
@@ -38,9 +67,16 @@
 }
 
 .eventboxcontainer {
+    margin: none;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    /* border: 1px solid black; */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+
 }
 
 
@@ -50,37 +86,45 @@
     z-index: 1;
     left: 0;
     top: 0;
-    width: 40%;
-    height: 30%;
-    overflow: auto;
-    border: 1px solid black;
-    margin: 15% 30%;
-    padding: 10px;
-    background-color: #eff0f3;
-    border-radius: 20px;
-    animation-name: modalanimation;
-    animation-duration: 0.4s;
-    animation-duration: 0.4s;
-    margin-left: 29%;
+    /* width: 40%;
+    height: 30%; */
+    overflow: hidden;
+    /* border: 1px solid black; */
+    /* margin: 15% 30%;
+    padding: 10px; */
+    background-color: #2e2e2e;
+    /* border-radius: 20px; */
+    
+    /* margin-left: 29%; */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    width: 100%; /* Full width */
+  height: 100%; /* Full height */
+
 
 }
 
 .modal-content {
-    background-color: #eff0f3;
-    margin: 0% auto;
+    
+    /* animation-name: modalanimation;
+    animation-duration: 0.4s;
+    animation-duration: 0.4s; */
+    background-color: #535353;
+    margin: 20% auto;
     padding: 20px;
-    width: 80%;
+    width: 35rem;
+    border-radius: 1rem;
     text-align: center;
+    color: var(--dark-text-color);
 }
 
 .settingsbutton {
-    font-size: 50px;
+    font-size: 3rem;
     border: none;
     background-color: transparent;
     position: fixed;
     margin-left: 93%;
     margin-top: 1rem;
-    color: black;
+    color: var(--dark-text-color);
     cursor: pointer;
 }
 
@@ -88,16 +132,21 @@
  {
     color: #aaa;
     float: right;
-    font-size: 60px;
+    font-size: 2rem;
     /* font-weight: bold; */
     margin-right: 15px;
-    background-color: #eff0f3;
+    background-color: #535353;
+    /* border: 1px solid black; */
+    margin-bottom: 1rem;
+    margin: 0;
+    padding: 0;
+
 
 }
 
 .close:hover,
 .close:focus {
-    color: black;
+    color: var(--dark-text-color);
     text-decoration: none;
     cursor: pointer;
 }
@@ -114,9 +163,10 @@
     }
 }
 
-#modalheading {
+#modalheading, .modal-content h3 {
     text-align: center;
     font-size: 1.5rem;
+    /* border: 1px solid black; */
 }
 
 .modal-content button {
@@ -124,5 +174,99 @@
 }
 
 .eventdate{
+    color: black;
+}
+
+/* body {
+    background-repeat: no-repeat;
+    background-size: auto;
+} */
+
+
+.days, .datename, .dayslabel, .eventdate {
+    /* border: 1px solid black; */
+    color: black;
+}
+
+.modal-content h3 {
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 1.5rem;
+
+}
+
+#modal-content-inside {
+    margin: 1rem;
+}
+
+.eventboxcontainer p {
+    color: var(--dark-text-color);
+}
+
+button {
+    font-size: 1rem;
+    padding: 0.25rem;
+    border: none;
+    border-radius: 0.25rem;
+    border-color: #535353;
+}
+
+::-webkit-datetime-edit { 
+    font-size: 1rem; 
+    padding: 0.2rem;
+    border: none;
+    border-radius: 0.25rem;
+    border-color: #535353;
+    
+
+}
+
+button:hover {
+    background-color: #aaa;
+}
+
+.settingsbutton:hover{
+    background-color: var(--dark-bg-color);
     color: #aaa;
 }
+
+select {
+    font-size: 1rem;
+    padding: 0.2rem;
+    border: none;
+    border-radius: 0.25rem;
+    border-color: #535353;
+
+}
+
+hr {
+    margin: 1rem;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+
+
+    /* top: -5px; */
+  /* right: 105%; */
+  }
+
+
+  .settings .tooltiptext {
+    top: 1.5rem;
+    right: 8.5rem;
+  }
+
+  /* .settings:hover .tooltiptext {
+    visibility: visible;
+  } */
