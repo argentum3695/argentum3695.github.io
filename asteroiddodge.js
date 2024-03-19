@@ -223,11 +223,17 @@ function playGame(timestamp) {
         numStarsCopied --;
     }
 
-    req = window.requestAnimationFrame(playGame);
-    prevTime = currTime;
 
     totalDistance = xDistance + yDistance;
     console.log(Math.round(totalDistance, 0));
+
+
+    makeDashboard();
+
+    req = window.requestAnimationFrame(playGame);
+    prevTime = currTime;
+
+   
 }
 
 
@@ -256,4 +262,17 @@ function drawStars() {
     for (i = 0; i < stars.length; i++) {
         ctx.fillRect(stars[i].starX, stars[i].starY, 2, 2);
     }
+}
+
+
+function makeDashboard() {
+//    ctx.fillStyle = 'white';
+//    ctx.fillRect((canvas.width/2-100), (canvas.height-100), 200, 100);
+//    ctx.fill;
+
+//    ctx.fillRect(0,0,10,10);
+
+    document.getElementById('dashboard').innerText = `Distance: ${Math.round(totalDistance, 0)}`;
+
+
 }
