@@ -4,6 +4,19 @@ const ctx = canvas.getContext('2d');
 var spacePressed;
 var launched = false;
 
+var spaceRepeatDelay = 5000;
+var lastSpacePressed;
+var currTime;
+var prevTime;
+
+var first = true;
+
+var projRenderList = [];
+var test = [];
+
+
+
+
 
 // Get the DPR and size of the canvas
 const dpr = window.devicePixelRatio;
@@ -32,10 +45,10 @@ ctx.fillStyle = "yellow";
 var projRadius = 5;
 
 var tarX = rect.width
-var tarY = rect.height/2;
+var tarY = rect.height / 2;
 
 var projX = 0 - projRadius - 1;
-var projY = rect.height/2;
+var projY = rect.height / 2;
 
 var gameOver = false;
 
@@ -67,8 +80,25 @@ function getKeyDown(keyEvent) {
     }
 
     if (`${keyEvent.code}` == "Space") {
+        
+        if (first == false) {
 
-        spacePressed = true;
+            console.log(`Diff: ${Date.now() - lastSpacePressed}`);
+            
+            if ((Date.now() - lastSpacePressed) > spaceRepeatDelay) {
+                console.log('asdfsdf');
+                spacePressed = true;
+                lastSpacePressed = Date.now();
+                
+            }
+        } else {
+            
+            spacePressed = true;
+            first = false;
+            lastSpacePressed = Date.now();
+        }
+
+
         // console.log('registering space pressed');
 
 
@@ -112,7 +142,7 @@ req = window.requestAnimationFrame(playGame);
 
 function playGame() {
 
-    
+
 
 
     if (tarX - projRadius <= 0) {
@@ -121,39 +151,70 @@ function playGame() {
     }
 
     if (!gameOver) {
+        // console.log(first);
         if (spacePressed) {
+            // console.log('space pressed');
+
+            
+            projRenderList.push(0);
+            
 
             launched = true;
-            console.log('launching')
-
-
         }
 
         if (launched) {
 
-            projX += 3;
+            for (proj in projRenderList) {
+                projRenderList[proj] = projRenderList[proj] + 3;
+            }
         }
 
         tarX -= 3;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        intercepted = false;
+        for (i = 0; i < projRenderList.length; i++) {
+            // console.log(`i = ${i}`);
+            if (!checkIntercept(projRenderList[i], tarX)) {
+                ctx.beginPath();
+                ctx.arc(projRenderList[i], projY, projRadius, 0, 2 * Math.PI);
+                ctx.stroke();
+            } else {
+                // console.log();
+                // spawnRequired = true;
+                // spawnBoth();
+                // console.log(projRenderList)
+                projRenderList.splice(i, 1);
 
 
-        if (!checkIntercept(projX, tarX)) {
+                intercepted = true;
+
+            }
+        }
+        if (intercepted) {
+            spawnBoth();
+        } else {
             ctx.beginPath();
             ctx.arc(tarX, tarY, projRadius, 0, 2 * Math.PI);
             ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(projX, projY, projRadius, 0, 2 * Math.PI);
-            ctx.stroke();
-        } else {
-            console.log('intercept')
-            launched = false;
-            spawnRequired = true;
-
-            spawnBoth();
         }
+
+
+        // if (!checkIntercept(projX, tarX)) {
+        //     ctx.beginPath();
+        //     ctx.arc(tarX, tarY, projRadius, 0, 2 * Math.PI);
+        //     ctx.stroke();
+
+        //     ctx.beginPath();
+        //     ctx.arc(projX, projY, projRadius, 0, 2 * Math.PI);
+        //     ctx.stroke();
+        // } else {
+        //     console.log('intercept')
+        //     launched = false;
+        //     spawnRequired = true;
+
+        //     spawnBoth();
+        // }
     }
 
 
@@ -168,6 +229,9 @@ function playGame() {
         document.getElementById('canvas').style.display = 'none';
         alert('game over');
     }
+
+
+    // first = false;
 
 }
 
@@ -184,9 +248,9 @@ function checkIntercept(x1, x2) {
 function spawnBoth() {
     console.log('spwaning');
     tarX = rect.width;
-    tarY = rect.height/2;
+    tarY = rect.height / 2;
 
     projX = 0 - projRadius - 1;
-    projY = rect.height/2;
+    projY = rect.height / 2;
 }
 
