@@ -121,7 +121,7 @@ function playGame(timestamp) {
 
     duration = currTime - zeroTime;
 
-    craftY += yvel * (timeDiff / 1000);
+    // craftY += yvel * (timeDiff / 1000);
     yDistance += Math.abs(yvel * (timeDiff / 1000));
     // console.log(asteroidRenderList[0].xcoord);
     if (asteroidRenderList[0].xcoord <= 0) {
@@ -129,15 +129,16 @@ function playGame(timestamp) {
         for (i in asteroidRenderList) {
             // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
             asteroidRenderList[i].xcoord -= xvel * (timeDiff / 1000);
+            asteroidRenderList[i].ycoord -= yvel * (timeDiff / 1000);
         }
     }
 
-    if (asteroidRenderList[0].xcoord <= 0) {
-        for (i in stars) {
-            // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
-            stars[i].starX -= xvel * (timeDiff / 1000);
-        }
-    }
+    // if (asteroidRenderList[0].xcoord <= 0) {
+    //     for (i in stars) {
+    //         // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
+    //         stars[i].starX -= xvel * (timeDiff / 1000);
+    //     }
+    // }
 
     if (asteroidRenderList[0].xcoord <= 0) {
        
@@ -202,26 +203,26 @@ function playGame(timestamp) {
 
     // console.log(asteroidRenderList[0].xcoord)
 
-    if (Math.abs(asteroidRenderList[0].xcoord) > (canvas.width * 5) * (numStarsCopied + 1) ) {
-        console.log('copying stars')
-        for (i in stars) {
-            // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
-            stars[i].starX += canvas.width * 5;
+    // if (Math.abs(asteroidRenderList[0].xcoord) > (canvas.width * 4) * (numStarsCopied + 1) ) {
+    //     console.log('copying stars')
+    //     for (i in stars) {
+    //         // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
+    //         stars[i].starX += canvas.width * 5;
             
-        }
-        numStarsCopied ++;
-    }
+    //     }
+    //     numStarsCopied ++;
+    // }
 
 
-    if (Math.abs(asteroidRenderList[0].xcoord) < (canvas.width * 5) * (numStarsCopied ) ) {
-        console.log('copying stars')
-        for (i in stars) {
-            // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
-            stars[i].starX -= canvas.width * 5;
+    // if (Math.abs(asteroidRenderList[0].xcoord) < (canvas.width * 4) * (numStarsCopied) ) {
+    //     console.log('copying stars')
+    //     for (i in stars) {
+    //         // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
+    //         stars[i].starX -= canvas.width * 5;
             
-        }
-        numStarsCopied --;
-    }
+    //     }
+    //     numStarsCopied --;
+    // }
 
 
     totalDistance = xDistance + yDistance;
