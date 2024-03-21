@@ -20,6 +20,8 @@ var rightArrowPressed;
 var xvel = 0;
 var yvel = 0;
 
+var gameOver = 0;
+
 var asteroidx = canvas.width;
 var asteroidy = canvas.height / 2;
 
@@ -224,8 +226,10 @@ function playGame(timestamp) {
 
     for (i in asteroidRenderList) {
         if (detectCollision(canvas.width / 2 - 20, craftY, asteroidRenderList[i].xcoord, asteroidRenderList[i].ycoord, 20, 20, asteroidRenderList[i].width, asteroidRenderList[i].height)) {
+            gameOver = 1;
             document.getElementById("canvas").style.display = "none";
             document.getElementById("endgame").style.display = "block";
+            endGame();
             cancelAnimationFrame(req);
         }
     }
@@ -254,7 +258,7 @@ function playGame(timestamp) {
     //     numStarsCopied --;
     // }
 
-    oldTotalDistance = totalDistance
+    oldTotalDistance = totalDistance;
     totalDistance = xDistance + yDistance;
     distanceDiff = totalDistance - oldTotalDistance;
     fuel -= fuelEfficiency * distanceDiff;
@@ -379,3 +383,9 @@ function park() {
     }
 }
 
+
+function endGame() {
+    xvel = 0;
+    yvel  = 0;
+    document.getElementById('dashboard').style.display = 'none';
+}

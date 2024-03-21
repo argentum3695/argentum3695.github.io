@@ -6,12 +6,7 @@
 }
 
 
-#endgame {
-    display: none;
-    font-size: 5rem;
-    margin-top: 40vh;
-    text-align: center;
-}
+
 
 body {
     margin: 0;
@@ -32,6 +27,7 @@ body {
 
 
 #dashboard {
+    
     position: fixed;
     /* margin-top: 90vh; */
     font-size: 20px; 
@@ -68,4 +64,15 @@ body {
 
 .dashboardbutton:hover {
     cursor: pointer;
+}
+
+.endgame {
+    padding-top: 40vh;
+    background-color: black;
+    color: aliceblue;
+    width: 100vw;
+    height: 100vh;
+    font-size: 5rem;
+    text-align: center;
+
 }
