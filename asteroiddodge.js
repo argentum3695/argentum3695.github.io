@@ -6,6 +6,10 @@ ctx.strokeStyle = "black";
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+var fuel = 500;
+var fuelEfficiency = 0.00001 * canvas.width;
+
+var power = 1;
 var craftY = canvas.height / 2;
 
 var first = true;
@@ -24,8 +28,8 @@ document.body.addEventListener("keyup", getKeyUp);
 
 var prevTime = 0;
 var asteroidRenderList = [];
-var starsContainer = [[],[],[]];
-var currStarIndex
+var starsContainer = [[], [], []];
+var currStarIndex;
 var stars = [];
 // var stars2 = [];
 // var stars3 = [];
@@ -141,16 +145,16 @@ function playGame(timestamp) {
     // }
 
     if (asteroidRenderList[0].xcoord <= 0) {
-       
-            // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
-            xDisplacement -= xvel * (timeDiff / 1000);
-            xDistance += Math.abs(xvel * (timeDiff / 1000));
-        
+
+        // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
+        xDisplacement -= xvel * (timeDiff / 1000);
+        xDistance += Math.abs(xvel * (timeDiff / 1000));
+
     }
 
     // console.log(`${xDisplacement}, ${asteroidRenderList[0].xcoord}`);
 
-        // console.log(xDistance);
+    // console.log(xDistance);
 
 
     if (asteroidRenderList[0].xcoord > 0) {
@@ -161,21 +165,26 @@ function playGame(timestamp) {
         }
     }
 
-    if (downArrowPressed) {
-        yvel += 7;
+
+    if (power) {
+        if (downArrowPressed) {
+            yvel += 7;
+        }
+
+        if (upArrowPressed) {
+            yvel -= 7;
+        }
+
+        if (rightArrowPressed) {
+            xvel += 10;
+        }
+
+        if (leftArrowPressed) {
+            xvel -= 10;
+        }
+
     }
 
-    if (upArrowPressed) {
-        yvel -= 7;
-    }
-
-    if (rightArrowPressed) {
-        xvel += 10;
-    }
-
-    if (leftArrowPressed) {
-        xvel -= 10;
-    }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "black";
@@ -183,14 +192,35 @@ function playGame(timestamp) {
 
     drawStars();
 
+    //Drawing Spacecraft
     ctx.beginPath();
     ctx.fillStyle = "white";
     ctx.fillRect(canvas.width / 2 - 20, craftY, 20, 20);
 
-    ctx.fillStyle = "grey"
+    if (power) {
+        if (upArrowPressed) {
+            drawBottomFlame();
+        }
+    
+        if (downArrowPressed) {
+            drawTopFlame();
+        }
+    
+        if (leftArrowPressed) {
+            drawRightFlame();
+        }
+    
+        if (rightArrowPressed) {
+            drawLeftFlame();
+        }
+    }
+    
+
+    ctx.fillStyle = "grey";
     for (i in asteroidRenderList) {
         ctx.fillRect(asteroidRenderList[i].xcoord, asteroidRenderList[i].ycoord, asteroidRenderList[i].width, asteroidRenderList[i].height);
     }
+
 
     for (i in asteroidRenderList) {
         if (detectCollision(canvas.width / 2 - 20, craftY, asteroidRenderList[i].xcoord, asteroidRenderList[i].ycoord, 20, 20, asteroidRenderList[i].width, asteroidRenderList[i].height)) {
@@ -208,7 +238,7 @@ function playGame(timestamp) {
     //     for (i in stars) {
     //         // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
     //         stars[i].starX += canvas.width * 5;
-            
+
     //     }
     //     numStarsCopied ++;
     // }
@@ -219,13 +249,21 @@ function playGame(timestamp) {
     //     for (i in stars) {
     //         // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
     //         stars[i].starX -= canvas.width * 5;
-            
+
     //     }
     //     numStarsCopied --;
     // }
 
-
+    oldTotalDistance = totalDistance
     totalDistance = xDistance + yDistance;
+    distanceDiff = totalDistance - oldTotalDistance;
+    fuel -= fuelEfficiency * distanceDiff;
+
+    if (fuel < 0) {
+        fuel = 0;
+        power = 0;
+    }
+
     console.log(Math.round(totalDistance, 0));
 
 
@@ -234,28 +272,33 @@ function playGame(timestamp) {
     req = window.requestAnimationFrame(playGame);
     prevTime = currTime;
 
-   
+
 }
 
 
 function detectCollision(x1, y1, x2, y2, width1, height1, width2, height2) {
-    if (((x1 + width1 > x2) && (x1 + width1 < (x2 + width2)) && (y1 + height1 > y2) && (y1 + height1 < y2 + height2))) {
-        return true;
+    // if (((x1 + width1 > x2) && (x1 + width1 < (x2 + width2)) && (y1 + height1 > y2) && (y1 + height1 < y2 + height2))) {
+    //     return true;
+    // } else {
+    //     return false;
+    // }
+
+
+
+    if (((x1 + width1) > (x2) && x1 < (x2 + width2)) && ((y1 + width1) > y2 && (y1 < y2 + width2))) {
+        return true
     } else {
-        return false;
+        return false
     }
 }
 
 function createStars() {
     ctx.fillStyle = "white";
-    // for (i = 0; i <3; i++) {
-        for (j = 0; j < 4000; j++) {
-            x = Math.floor(Math.random() * (canvas.width * 5));
-            y = Math.floor(Math.random() * (canvas.height * 5));
-            stars.push({ starX: x, starY: y });
-        }
-    // }
-    
+    for (j = 0; j < 4000; j++) {
+        x = Math.floor(Math.random() * (canvas.width * 5));
+        y = Math.floor(Math.random() * (canvas.height * 5));
+        stars.push({ starX: x, starY: y });
+    }
 }
 
 function drawStars() {
@@ -267,13 +310,72 @@ function drawStars() {
 
 
 function makeDashboard() {
-//    ctx.fillStyle = 'white';
-//    ctx.fillRect((canvas.width/2-100), (canvas.height-100), 200, 100);
-//    ctx.fill;
-
-//    ctx.fillRect(0,0,10,10);
-
-    document.getElementById('dashboard').innerText = `Distance: ${Math.round(totalDistance, 0)}`;
-
+    document.getElementById('distance').innerText = `Distance: ${Math.round(totalDistance, 0)}`;
+    document.getElementById('fuel').innerText = `Fuel: ${Math.round(fuel, 1)}`;
+    if ((Math.abs(xvel) < 20 && Math.abs(yvel) < 20)) {
+        document.getElementById('parkbutton').style.backgroundColor = 'white';
+    } else {
+        document.getElementById('parkbutton').style.backgroundColor = 'red';
+    }
 
 }
+
+function drawLeftFlame() {
+    console.log('asfd');
+    ctx.strokeStyle = 'yellow';
+    ctx.fillStyle = 'yellow';
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2 - 20, craftY + 10);
+    ctx.lineTo(canvas.width / 2 - 30, craftY);
+    ctx.lineTo(canvas.width / 2 - 30, craftY + 20);
+    ctx.lineTo(canvas.width / 2 - 20, craftY + 10);
+    ctx.fill();
+}
+
+function drawRightFlame() {
+    console.log('asfd');
+    ctx.strokeStyle = 'yellow';
+    ctx.fillStyle = 'yellow';
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2, craftY + 10);
+    ctx.lineTo(canvas.width / 2 + 10, craftY);
+    ctx.lineTo(canvas.width / 2 + 10, craftY + 20);
+    ctx.lineTo(canvas.width / 2, craftY + 10);
+    ctx.fill();
+}
+
+function drawTopFlame() {
+    console.log('asfd');
+    ctx.strokeStyle = 'yellow';
+    ctx.fillStyle = 'yellow';
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2 - 10, craftY);
+    ctx.lineTo(canvas.width / 2 - 20, craftY - 10);
+    ctx.lineTo(canvas.width / 2, craftY - 10);
+    // ctx.lineTo(canvas.width / 2, craftY+10);
+    ctx.stroke();
+    ctx.fill();
+}
+
+
+function drawBottomFlame() {
+    console.log('asfd');
+    ctx.strokeStyle = 'yellow';
+    ctx.fillStyle = 'yellow';
+    ctx.beginPath();
+    ctx.moveTo(canvas.width / 2 - 10, craftY + 20);
+    ctx.lineTo(canvas.width / 2 - 20, craftY + 30);
+    ctx.lineTo(canvas.width / 2, craftY + 30);
+    // ctx.lineTo(canvas.width / 2, craftY+10);
+    ctx.stroke();
+    ctx.fill();
+}
+
+
+function park() {
+    if (Math.abs(xvel) < 20 && Math.abs(yvel) < 20) {
+        xvel = 0;
+        yvel = 0;
+    }
+}
+

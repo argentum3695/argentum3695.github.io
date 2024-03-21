@@ -34,11 +34,11 @@ body {
 #dashboard {
     position: fixed;
     /* margin-top: 90vh; */
-    font-size: 30px; 
+    font-size: 20px; 
     /* color: red; */
     /* border: 1px solid red; */
     z-index: 10;
-    height: 10vh;
+    /* height: 11vh; */
     bottom: 0;
     opacity: 0.7;
     background-color: white;
@@ -52,4 +52,20 @@ body {
  
     /* transform: translateY(-20%); */
 
+}
+
+#distance {
+    /* display: inline-block; */
+    margin: 0.5rem 1rem;
+}
+
+.dashboardbutton {
+    margin: 0.5rem;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+}
+
+.dashboardbutton:hover {
+    cursor: pointer;
 }
