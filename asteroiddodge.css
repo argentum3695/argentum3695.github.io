@@ -45,6 +45,7 @@ body {
     margin: auto;
     left: 50%;
     transform: translateX(-50%);
+    width: 30vw;
  
     /* transform: translateY(-20%); */
 
@@ -56,10 +57,11 @@ body {
 }
 
 .dashboardbutton {
-    margin: 0.5rem;
+    margin: 0.25rem;
     outline: none;
     border: 1px solid black;
     border-radius: 0.5rem;
+
 }
 
 .dashboardbutton:hover {
@@ -74,5 +76,6 @@ body {
     height: 100vh;
     font-size: 5rem;
     text-align: center;
+    display: none;
 
 }

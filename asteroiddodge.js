@@ -9,14 +9,22 @@ canvas.height = window.innerHeight;
 var fuel = 500;
 var fuelEfficiency = 0.00001 * canvas.width;
 
+var miningTargetState = false;
+
 var power = 1;
 var craftY = canvas.height / 2;
+
+var fuelPerAsteroidPixel = 0.01;
 
 var first = true;
 var downArrowPressed;
 var upArrowPressed;
 var leftArrowPressed;
 var rightArrowPressed;
+var spacePressed;
+var pKeyPressed;
+
+
 var xvel = 0;
 var yvel = 0;
 
@@ -48,8 +56,7 @@ for (i = 0; i < 1000; i++) {
 
     genwidth = 10 + Math.floor(Math.random() * 200);
     genheight = genwidth;
-
-    asteroidRenderList.push({ initxcoord: genx, xcoord: genx, ycoord: geny, width: genwidth, height: genheight });
+    asteroidRenderList.push({ initxcoord: genx, xcoord: genx, ycoord: geny, width: genwidth, height: genheight, distance: 0, mined: 0 });
 }
 
 var xDisplacement = 0;
@@ -61,28 +68,41 @@ createStars();
 
 function getKeyDown(keyEvent) {
 
+    console.log(keyEvent.code)
 
     if (`${keyEvent.code}` == "ArrowDown") {
         downArrowPressed = true;
         keyEvent.preventDefault();
+
     }
     if (`${keyEvent.code}` == "ArrowUp") {
         upArrowPressed = true;
         keyEvent.preventDefault();
+
     }
     if (`${keyEvent.code}` == "ArrowLeft") {
         leftArrowPressed = true;
         keyEvent.preventDefault();
+
     }
     if (`${keyEvent.code}` == "ArrowRight") {
         rightArrowPressed = true;
         keyEvent.preventDefault();
+
     }
 
     if (`${keyEvent.code}` == "Space") {
         spacePressed = true;
         keyEvent.preventDefault();
+
     }
+
+    if (`${keyEvent.code}` == "KeyP") {
+        pKeyPressed = true;
+        keyEvent.preventDefault();
+
+    }
+
 }
 
 
@@ -91,24 +111,37 @@ function getKeyUp(keyEvent) {
     if (`${keyEvent.code}` == "ArrowDown") {
         downArrowPressed = false;
         keyEvent.preventDefault();
+
     }
     if (`${keyEvent.code}` == "ArrowUp") {
         upArrowPressed = false;
         keyEvent.preventDefault();
+
     }
     if (`${keyEvent.code}` == "ArrowLeft") {
         leftArrowPressed = false;
         keyEvent.preventDefault();
+
     }
     if (`${keyEvent.code}` == "ArrowRight") {
         rightArrowPressed = false;
         keyEvent.preventDefault();
+
     }
 
     if (`${keyEvent.code}` == "Space") {
         spacePressed = false;
         keyEvent.preventDefault();
+
     }
+
+    if (`${keyEvent.code}` == "KeyP") {
+        pKeyPressed = false;
+        keyEvent.preventDefault();
+
+    }
+
+
 }
 
 
@@ -129,7 +162,6 @@ function playGame(timestamp) {
 
     // craftY += yvel * (timeDiff / 1000);
     yDistance += Math.abs(yvel * (timeDiff / 1000));
-    // console.log(asteroidRenderList[0].xcoord);
     if (asteroidRenderList[0].xcoord <= 0) {
 
         for (i in asteroidRenderList) {
@@ -153,10 +185,6 @@ function playGame(timestamp) {
         xDistance += Math.abs(xvel * (timeDiff / 1000));
 
     }
-
-    // console.log(`${xDisplacement}, ${asteroidRenderList[0].xcoord}`);
-
-    // console.log(xDistance);
 
 
     if (asteroidRenderList[0].xcoord > 0) {
@@ -185,6 +213,10 @@ function playGame(timestamp) {
             xvel -= 10;
         }
 
+        if (pKeyPressed) {
+            park();
+        }
+
     }
 
 
@@ -203,25 +235,33 @@ function playGame(timestamp) {
         if (upArrowPressed) {
             drawBottomFlame();
         }
-    
+
         if (downArrowPressed) {
             drawTopFlame();
         }
-    
+
         if (leftArrowPressed) {
             drawRightFlame();
         }
-    
+
         if (rightArrowPressed) {
             drawLeftFlame();
         }
     }
-    
+
+    if (miningTargetState) {
+        ctx.fillStyle = '#0dc8ce';
+        ctx.fillRect(asteroidRenderList[nearestAsteroid()].xcoord - 7, asteroidRenderList[nearestAsteroid()].ycoord - 7, asteroidRenderList[nearestAsteroid()].width + 14, asteroidRenderList[nearestAsteroid()].height + 14);
+    }
+
+
 
     ctx.fillStyle = "grey";
     for (i in asteroidRenderList) {
         ctx.fillRect(asteroidRenderList[i].xcoord, asteroidRenderList[i].ycoord, asteroidRenderList[i].width, asteroidRenderList[i].height);
     }
+
+    calculateAsteroidDistance();
 
 
     for (i in asteroidRenderList) {
@@ -235,10 +275,8 @@ function playGame(timestamp) {
     }
     ctx.stroke();
 
-    // console.log(asteroidRenderList[0].xcoord)
 
     // if (Math.abs(asteroidRenderList[0].xcoord) > (canvas.width * 4) * (numStarsCopied + 1) ) {
-    //     console.log('copying stars')
     //     for (i in stars) {
     //         // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
     //         stars[i].starX += canvas.width * 5;
@@ -249,7 +287,6 @@ function playGame(timestamp) {
 
 
     // if (Math.abs(asteroidRenderList[0].xcoord) < (canvas.width * 4) * (numStarsCopied) ) {
-    //     console.log('copying stars')
     //     for (i in stars) {
     //         // asteroidRenderList[i].xcoord = asteroidRenderList[i].initxcoord - (duration);
     //         stars[i].starX -= canvas.width * 5;
@@ -268,7 +305,6 @@ function playGame(timestamp) {
         power = 0;
     }
 
-    console.log(Math.round(totalDistance, 0));
 
 
     makeDashboard();
@@ -325,7 +361,6 @@ function makeDashboard() {
 }
 
 function drawLeftFlame() {
-    console.log('asfd');
     ctx.strokeStyle = 'yellow';
     ctx.fillStyle = 'yellow';
     ctx.beginPath();
@@ -337,7 +372,6 @@ function drawLeftFlame() {
 }
 
 function drawRightFlame() {
-    console.log('asfd');
     ctx.strokeStyle = 'yellow';
     ctx.fillStyle = 'yellow';
     ctx.beginPath();
@@ -349,7 +383,6 @@ function drawRightFlame() {
 }
 
 function drawTopFlame() {
-    console.log('asfd');
     ctx.strokeStyle = 'yellow';
     ctx.fillStyle = 'yellow';
     ctx.beginPath();
@@ -363,7 +396,6 @@ function drawTopFlame() {
 
 
 function drawBottomFlame() {
-    console.log('asfd');
     ctx.strokeStyle = 'yellow';
     ctx.fillStyle = 'yellow';
     ctx.beginPath();
@@ -386,6 +418,55 @@ function park() {
 
 function endGame() {
     xvel = 0;
-    yvel  = 0;
+    yvel = 0;
     document.getElementById('dashboard').style.display = 'none';
+}
+
+
+function calculateAsteroidDistance() {
+    craftXPosition = canvas.width / 2 - 20;
+    craftYPosition = craftY;
+    for (i = 0; i < asteroidRenderList.length; i++) {
+        asteroidX = asteroidRenderList[i].xcoord;
+        asteroidY = asteroidRenderList[i].ycoord;
+        asteroidDistance = Math.sqrt((craftXPosition - asteroidX) ** 2 + (craftYPosition - asteroidY) ** 2);
+        asteroidRenderList[i].distance = asteroidDistance;
+    }
+}
+
+function nearestAsteroid() {
+    leastDistanceIndex = 0;
+
+    for (i = 0; i < asteroidRenderList.length; i++) {
+        if (asteroidRenderList[i].distance < asteroidRenderList[leastDistanceIndex].distance) {
+            leastDistanceIndex = i;
+        }
+    }
+
+    return leastDistanceIndex;
+}
+
+function showMiningTarget() {
+    if (miningTargetState == false) {
+        miningTargetState = true;
+        document.getElementById('miningtargetbutton').innerText = 'Hide Mining Target';
+    } else {
+        miningTargetState = false;
+        document.getElementById('miningtargetbutton').innerText = 'Show Mining Target'
+
+    }
+
+
+}
+
+function mine() {
+    if (asteroidRenderList[nearestAsteroid()].mined == 0) {
+        area = asteroidRenderList[nearestAsteroid()].width * asteroidRenderList[nearestAsteroid()].height;
+        fuelGain = area * fuelPerAsteroidPixel;
+        fuel += fuelGain;
+        asteroidRenderList[nearestAsteroid()].mined = 1;
+    } else {
+        alert('Asteroid already mined');
+    }
+
 }
