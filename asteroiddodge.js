@@ -7,7 +7,12 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 var fuel = 500;
-var fuelEfficiency = 0.00001 * canvas.width;
+var fuelEfficiency = 0.01;
+
+var standardVelocityIncrement = 10;
+var slowVelocityIncrement = 5;
+var FastVelocityIncrement = 20;
+
 
 var miningTargetState = false;
 
@@ -21,7 +26,10 @@ var downArrowPressed;
 var upArrowPressed;
 var leftArrowPressed;
 var rightArrowPressed;
+
 var spacePressed;
+var shiftPressed;
+
 var pKeyPressed;
 var tKeyPressed;
 var mKeyPressed;
@@ -224,19 +232,23 @@ function playGame(timestamp) {
 
     if (power) {
         if (downArrowPressed) {
-            yvel += 7;
+            yvel += 10;
+            fuel -= fuelEfficiency * 10;
         }
 
         if (upArrowPressed) {
-            yvel -= 7;
+            yvel -= 10;
+            fuel -= fuelEfficiency * 10;
         }
 
         if (rightArrowPressed) {
             xvel += 10;
+            fuel -= fuelEfficiency * 10;
         }
 
         if (leftArrowPressed) {
             xvel -= 10;
+            fuel -= fuelEfficiency * 10;
         }
 
         if (pKeyPressed) {
@@ -317,7 +329,7 @@ function playGame(timestamp) {
     oldTotalDistance = totalDistance;
     totalDistance = xDistance + yDistance;
     distanceDiff = totalDistance - oldTotalDistance;
-    fuel -= fuelEfficiency * distanceDiff;
+    // fuel -= fuelEfficiency * distanceDiff;
 
     if (fuel < 0) {
         fuel = 0;
