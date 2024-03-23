@@ -51,9 +51,9 @@ body {
 
 }
 
-#distance {
+#distance, #fuel {
     /* display: inline-block; */
-    margin: 0.5rem 1rem;
+    
 }
 
 .dashboardbutton {
@@ -61,7 +61,6 @@ body {
     outline: none;
     border: 1px solid black;
     border-radius: 0.5rem;
-
 }
 
 .dashboardbutton:hover {
@@ -78,4 +77,25 @@ body {
     text-align: center;
     display: none;
 
+}
+
+
+#stats {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* flex-basis: 9rem; */
+}
+
+
+
+
+.stat {
+    border: 1px solid black;
+    margin: 0.3rem 0.5rem;
+    font-size: 1rem;
+    padding: 0.2rem;
+    flex-basis: 9rem;
 }

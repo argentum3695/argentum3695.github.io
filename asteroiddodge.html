@@ -7,23 +7,37 @@
     <link rel="icon" type="image/x-icon" href="lettera.ico">
     <title>Asteroid Dodge</title>
     <link rel="stylesheet" href="asteroiddodge.css">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 
 <body>
     <div class="container">
 
         <canvas id="canvas"></canvas>
-    <div id="dashboard">
-        <p id="distance"></p>
-        <p id="fuel"></p>
-        <button id="parkbutton" class="dashboardbutton" onclick="park();">Park</button>
-        <button id="miningtargetbutton" class="dashboardbutton" onclick="showMiningTarget();">Show Mining Target</button>
-        <button id="minebutton" class="dashboardbutton" onclick="mine();">Mine</button>
-    </div>
+        <div id="dashboard">
+            <div id="stats">
+                <div id="distance" class="stat"></div>
+                <div id="fuel" class="stat"></div>
+                <div id="xvel" class="stat"></div>
+                <div id="yvel" class="stat"></div>
+                <div id="position" class="stat"></div>
+
+            </div>
+            
+            <button id="parkbutton" class="dashboardbutton" onclick="park();">Park</button>
+            <button id="miningtargetbutton" class="dashboardbutton" onclick="showMiningTarget();">
+                <!-- <span class="material-symbols-outlined" id="point_scan">point_scan</span> -->
+                Show Mining Target
+            </button>
+
+            <button id="minebutton" class="dashboardbutton" onclick="mine();">Mine</button>
+        </div>
 
 
     </div>
-    
+
     <div class="endgame" id="endgame">
         Game Over
     </div>

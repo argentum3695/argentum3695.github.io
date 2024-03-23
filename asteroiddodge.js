@@ -73,6 +73,7 @@ for (i = 0; i < 1000; i++) {
 }
 
 var xDisplacement = 0;
+var yDisplacement = 0;
 var xDistance = 0;
 var yDistance = 0;
 var totalDistance = 0;
@@ -109,6 +110,14 @@ function getKeyDown(keyEvent) {
         keyEvent.preventDefault();
 
     }
+
+    if (`${keyEvent.code}` == "ShiftRight" || `${keyEvent.code}` == "ShiftLeft") {
+        shiftPressed = true;
+        keyEvent.preventDefault();
+
+    }
+
+    
 
     if (`${keyEvent.code}` == "KeyP") {
         if (!pKeyFired) {
@@ -165,6 +174,12 @@ function getKeyUp(keyEvent) {
 
     }
 
+    if (`${keyEvent.code}` == "ShiftRight" || `${keyEvent.code}` == "ShiftLeft") {
+        shiftPressed = false;
+        keyEvent.preventDefault();
+
+    }
+
     if (`${keyEvent.code}` == "KeyP") {
         pKeyFired = false;
         pKeyPressed = false;
@@ -199,11 +214,13 @@ function playGame(timestamp) {
         prevTime = Date.now();
         first = false;
     }
+
     timeDiff = currTime - prevTime;
 
     duration = currTime - zeroTime;
 
     yDistance += Math.abs(yvel * (timeDiff / 1000));
+    yDisplacement -= yvel * (timeDiff / 1000);
     if (asteroidRenderList[0].xcoord <= 0) {
 
         for (i in asteroidRenderList) {
@@ -221,6 +238,10 @@ function playGame(timestamp) {
 
     }
 
+    if (asteroidRenderList[0].xcoord == 0) {
+        xDisplacement = 0;
+    }
+
 
     if (asteroidRenderList[0].xcoord > 0) {
         xvel = 0;
@@ -231,24 +252,34 @@ function playGame(timestamp) {
 
 
     if (power) {
+
+        if (spacePressed) {
+            increment = 2 * standardVelocityIncrement;
+        } else if (shiftPressed) {
+            increment = 0.1 * standardVelocityIncrement;
+        } else {
+            increment = standardVelocityIncrement;
+        }
+
+
         if (downArrowPressed) {
-            yvel += 10;
-            fuel -= fuelEfficiency * 10;
+            yvel += increment;
+            fuel -= fuelEfficiency * increment;
         }
 
         if (upArrowPressed) {
-            yvel -= 10;
-            fuel -= fuelEfficiency * 10;
+            yvel -= increment;
+            fuel -= fuelEfficiency * increment;
         }
 
         if (rightArrowPressed) {
-            xvel += 10;
-            fuel -= fuelEfficiency * 10;
+            xvel += increment;
+            fuel -= fuelEfficiency * increment;
         }
 
         if (leftArrowPressed) {
-            xvel -= 10;
-            fuel -= fuelEfficiency * 10;
+            xvel -= increment;
+            fuel -= fuelEfficiency * increment;
         }
 
         if (pKeyPressed) {
@@ -294,11 +325,14 @@ function playGame(timestamp) {
     }
 
     if (miningTargetState) {
-        if (detectCollision(canvas.width / 2 - 20, craftY, asteroidRenderList[nearestAsteroid()].xcoord-30, asteroidRenderList[nearestAsteroid()].ycoord-30, 20, 20, asteroidRenderList[nearestAsteroid()].width +60 , asteroidRenderList[nearestAsteroid()].height+60)) {
-            ctx.fillStyle = '#15e615';
-        } else {
-            ctx.fillStyle = '#0dc8ce';
 
+        if (asteroidRenderList[nearestAsteroid()].mined == 1) {
+            ctx.fillStyle = '#d41313';
+        }
+        else if (detectCollision(canvas.width / 2 - 20, craftY, asteroidRenderList[nearestAsteroid()].xcoord-30, asteroidRenderList[nearestAsteroid()].ycoord-30, 20, 20, asteroidRenderList[nearestAsteroid()].width +60 , asteroidRenderList[nearestAsteroid()].height+60)) {
+            ctx.fillStyle = '#15e615';
+        }  else {
+            ctx.fillStyle = '#0dc8ce';
         }
         ctx.fillRect(asteroidRenderList[nearestAsteroid()].xcoord - 7, asteroidRenderList[nearestAsteroid()].ycoord - 7, asteroidRenderList[nearestAsteroid()].width + 14, asteroidRenderList[nearestAsteroid()].height + 14);
     }
@@ -373,6 +407,9 @@ function drawStars() {
 function makeDashboard() {
     document.getElementById('distance').innerText = `Distance: ${Math.round(totalDistance, 0)}`;
     document.getElementById('fuel').innerText = `Fuel: ${Math.round(fuel, 1)}`;
+    document.getElementById('xvel').innerText = `x vel: ${Math.round(xvel, 2)}`;
+    document.getElementById('yvel').innerText = `y vel: ${Math.round(-yvel, 2)}`;
+    document.getElementById('position').innerText = `x: ${Math.round(-xDisplacement, 0)}, y: ${Math.round(yDisplacement, 1)}`;
     if ((Math.abs(xvel) < 20 && Math.abs(yvel) < 20)) {
         document.getElementById('parkbutton').style.backgroundColor = 'white';
     } else {
