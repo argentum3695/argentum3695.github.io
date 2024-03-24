@@ -33,9 +33,11 @@ var shiftPressed;
 var pKeyPressed;
 var tKeyPressed;
 var mKeyPressed;
+var cKeyPressed;
 var pKeyFired;
 var tKeyFired;
 var mKeyFired;
+var cKeyFired;
 
 
 var xvel = 0;
@@ -61,16 +63,31 @@ var numStarsCopied = 0;
 prevx = 0;
 
 asteroidRenderList.push({ initxcoord: 0, xcoord: 0, ycoord: 0, width: 0, height: 0 })
-for (i = 0; i < 1000; i++) {
+for (i = 0; i < 10000; i++) {
 
     genx = 1000 + prevx + Math.floor(Math.random() * 1000);
-    prevx = genx
-    geny = Math.floor(Math.random() * 800)
+    prevx = genx;
+    geny = Math.floor(Math.random() * 800);
+
+    // genx =  1000 + Math.floor(Math.random() * 100000);
+    // // prevx = genx;
+    // geny = Math.floor(Math.random() * 100000);
 
     genwidth = 10 + Math.floor(Math.random() * 200);
     genheight = genwidth;
     asteroidRenderList.push({ initxcoord: genx, xcoord: genx, ycoord: geny, width: genwidth, height: genheight, distance: 0, mined: 0 });
 }
+
+// for (i=0; i<asteroidRenderList.length; i++) {
+//     asteroidRenderList[i].ycoord -=50000;
+// }
+
+// for (i=0; i<asteroidRenderList.length; i++) {
+//     asteroidRenderList[i].xcoord -=100;
+// }
+
+
+
 
 var xDisplacement = 0;
 var yDisplacement = 0;
@@ -127,6 +144,7 @@ function getKeyDown(keyEvent) {
        
         keyEvent.preventDefault();
     }
+
     if (`${keyEvent.code}` == "KeyT") {
         if (!tKeyFired) {
             tKeyPressed = true;
@@ -134,6 +152,16 @@ function getKeyDown(keyEvent) {
         }
         keyEvent.preventDefault();
     }
+
+    if (`${keyEvent.code}` == "KeyC") {
+        if (!cKeyFired) {
+            cKeyPressed = true;
+            cKeyFired = true;
+        }
+        keyEvent.preventDefault();
+    }
+
+
     if (`${keyEvent.code}` == "KeyM") {
         if (!mKeyFired) {
             mKeyPressed = true;
@@ -192,6 +220,14 @@ function getKeyUp(keyEvent) {
         keyEvent.preventDefault();
 
     }
+
+    if (`${keyEvent.code}` == "KeyC") {
+        cKeyFired = false;
+        cKeyPressed = false;
+        keyEvent.preventDefault();
+
+    }
+
     if (`${keyEvent.code}` == "KeyM") {
         mKeyFired = false;
         mKeyPressed = false;
@@ -288,7 +324,7 @@ function playGame(timestamp) {
         if (tKeyPressed) {
             showMiningTarget();
         }
-        if (mKeyPressed) {
+        if (cKeyPressed) {
             mine();
         }
 
@@ -534,7 +570,7 @@ function mine() {
         alert('Asteroid already mined');
     }
 
-    mKeyPressed = false;
+    cKeyPressed = false;
 
 }
 
@@ -555,5 +591,7 @@ function nearestAsteroidCenterDistance() {
     centerDistance = Math.sqrt((craftXCenter + asteroidXCenter)**2 + (craftYCenter + asteroidYCenter)**2);
     return centerDistance;
 }
+
+
 
 
