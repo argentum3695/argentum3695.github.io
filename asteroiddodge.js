@@ -39,6 +39,7 @@ var tKeyFired;
 var mKeyFired;
 var cKeyFired;
 
+// var collisionExcused = false;
 
 var xvel = 0;
 var yvel = 0;
@@ -69,17 +70,17 @@ for (i = 0; i < 10000; i++) {
     prevx = genx;
     geny = Math.floor(Math.random() * 800);
 
-    // genx =  1000 + Math.floor(Math.random() * 100000);
-    // // prevx = genx;
-    // geny = Math.floor(Math.random() * 100000);
+    // genx = 1000 + prevx + Math.floor(Math.random() * 1000);
+    // prevx = genx;
+    // geny = Math.floor(Math.random() * 5000);
 
     genwidth = 10 + Math.floor(Math.random() * 200);
     genheight = genwidth;
     asteroidRenderList.push({ initxcoord: genx, xcoord: genx, ycoord: geny, width: genwidth, height: genheight, distance: 0, mined: 0 });
 }
 
-// for (i=0; i<asteroidRenderList.length; i++) {
-//     asteroidRenderList[i].ycoord -=50000;
+// for (i = 0; i < asteroidRenderList.length; i++) {
+//     asteroidRenderList[i].ycoord -= 2500;
 // }
 
 // for (i=0; i<asteroidRenderList.length; i++) {
@@ -134,14 +135,14 @@ function getKeyDown(keyEvent) {
 
     }
 
-    
+
 
     if (`${keyEvent.code}` == "KeyP") {
         if (!pKeyFired) {
             pKeyPressed = true;
             pKeyFired = true;
         }
-       
+
         keyEvent.preventDefault();
     }
 
@@ -344,18 +345,25 @@ function playGame(timestamp) {
 
     if (power) {
         if (upArrowPressed) {
+            // collisionExcused = false;
             drawBottomFlame();
         }
 
         if (downArrowPressed) {
+            // collisionExcused = false;
+
             drawTopFlame();
         }
 
         if (leftArrowPressed) {
+            // collisionExcused = false;
+
             drawRightFlame();
         }
 
         if (rightArrowPressed) {
+            // collisionExcused = false;
+
             drawLeftFlame();
         }
     }
@@ -365,9 +373,9 @@ function playGame(timestamp) {
         if (asteroidRenderList[nearestAsteroid()].mined == 1) {
             ctx.fillStyle = '#d41313';
         }
-        else if (detectCollision(canvas.width / 2 - 20, craftY, asteroidRenderList[nearestAsteroid()].xcoord-30, asteroidRenderList[nearestAsteroid()].ycoord-30, 20, 20, asteroidRenderList[nearestAsteroid()].width +60 , asteroidRenderList[nearestAsteroid()].height+60)) {
+        else if (detectCollision(canvas.width / 2 - 20, craftY, asteroidRenderList[nearestAsteroid()].xcoord - 30, asteroidRenderList[nearestAsteroid()].ycoord - 30, 20, 20, asteroidRenderList[nearestAsteroid()].width + 60, asteroidRenderList[nearestAsteroid()].height + 60)) {
             ctx.fillStyle = '#15e615';
-        }  else {
+        } else {
             ctx.fillStyle = '#0dc8ce';
         }
         ctx.fillRect(asteroidRenderList[nearestAsteroid()].xcoord - 7, asteroidRenderList[nearestAsteroid()].ycoord - 7, asteroidRenderList[nearestAsteroid()].width + 14, asteroidRenderList[nearestAsteroid()].height + 14);
@@ -385,11 +393,29 @@ function playGame(timestamp) {
 
     for (i in asteroidRenderList) {
         if (detectCollision(canvas.width / 2 - 20, craftY, asteroidRenderList[i].xcoord, asteroidRenderList[i].ycoord, 20, 20, asteroidRenderList[i].width, asteroidRenderList[i].height)) {
-            gameOver = 1;
-            document.getElementById("canvas").style.display = "none";
-            document.getElementById("endgame").style.display = "block";
-            endGame();
-            cancelAnimationFrame(req);
+
+
+            // resultantVel = Math.sqrt((xvel) ** 2 + (yvel) ** 2);
+            // if (resultantVel < 100) {
+            //     freeCraft();
+            //     xvel = -0.7 * xvel;
+            //     yvel = -0.7 * yvel;
+            //     // collisionExcused = true;
+            // } else {
+                // if (!collisionExcused) {
+                gameOver = 1;
+                document.getElementById("canvas").style.display = "none";
+                document.getElementById("endgame").style.display = "block";
+                endGame();
+                cancelAnimationFrame(req);
+                // }
+
+            // }
+
+
+
+
+
         }
     }
     ctx.stroke();
@@ -557,17 +583,17 @@ function showMiningTarget() {
 
 function mine() {
     if (asteroidRenderList[nearestAsteroid()].mined == 0) {
-        if (detectCollision(canvas.width / 2 - 20, craftY, asteroidRenderList[nearestAsteroid()].xcoord-30, asteroidRenderList[nearestAsteroid()].ycoord-30, 20, 20, asteroidRenderList[nearestAsteroid()].width +60 , asteroidRenderList[nearestAsteroid()].height+60)) {
+        if (detectCollision(canvas.width / 2 - 20, craftY, asteroidRenderList[nearestAsteroid()].xcoord - 30, asteroidRenderList[nearestAsteroid()].ycoord - 30, 20, 20, asteroidRenderList[nearestAsteroid()].width + 60, asteroidRenderList[nearestAsteroid()].height + 60)) {
             area = asteroidRenderList[nearestAsteroid()].width * asteroidRenderList[nearestAsteroid()].height;
-        fuelGain = area * fuelPerAsteroidPixel;
-        fuel += fuelGain;
-        asteroidRenderList[nearestAsteroid()].mined = 1;
+            fuelGain = area * fuelPerAsteroidPixel;
+            fuel += fuelGain;
+            asteroidRenderList[nearestAsteroid()].mined = 1;
         } else {
-            alert('asteroid too far!');
+            // alert('asteroid too far!');
         }
-        
+
     } else {
-        alert('Asteroid already mined');
+        // alert('Asteroid already mined');
     }
 
     cKeyPressed = false;
@@ -585,13 +611,42 @@ function nearestAsteroidCenterDistance() {
     asteroidx = asteroidRenderList[nearestAsteroid()].xcoord;
     asteroidy = asteroidRenderList[nearestAsteroid()].ycoord;
 
-    asteroidXCenter = asteroidx + asteroidRenderList[nearestAsteroid()].width/2;
-    asteroidYCenter = asteroidy + asteroidRenderList[nearestAsteroid()].height/2;
+    asteroidXCenter = asteroidx + asteroidRenderList[nearestAsteroid()].width / 2;
+    asteroidYCenter = asteroidy + asteroidRenderList[nearestAsteroid()].height / 2;
 
-    centerDistance = Math.sqrt((craftXCenter + asteroidXCenter)**2 + (craftYCenter + asteroidYCenter)**2);
+    centerDistance = Math.sqrt((craftXCenter + asteroidXCenter) ** 2 + (craftYCenter + asteroidYCenter) ** 2);
     return centerDistance;
 }
 
 
+function freeCraft() {
+    craftxCoord = canvas.width / 2 - 20
+    craftyCoord = craftY;
+
+    asteroidxCoord = asteroidRenderList[nearestAsteroid()].xcoord;
+    asteroidyCoord = asteroidRenderList[nearestAsteroid()].ycoord;
+    asteroidWidth = asteroidRenderList[nearestAsteroid()].width;
+    asteroidHeight = asteroidRenderList[nearestAsteroid()].height;
+
+    if (((craftxCoord + 20 ) > asteroidxCoord) && (craftxCoord < ( asteroidxCoord + asteroidWidth)) && craftyCoord > asteroidyCoord) {
+
+        if (craftxCoord < asteroidxCoord) {
+            asteroidRenderList[nearestAsteroid()].xcoord = craftxCoord + 21;
+        } else {
+            asteroidRenderList[nearestAsteroid()].xcoord = craftxCoord -1 - asteroidWidth;
+        }
+    } 
+
+    // if (((craftyCoord + 20 ) > asteroidyCoord) && (craftyCoord < ( asteroidyCoord + asteroidHeight))) {
+
+    //     if (craftyCoord < asteroidyCoord) {
+    //         asteroidRenderList[nearestAsteroid()].ycoord = craftyCoord + 21;
+    //     } else {
+    //         asteroidRenderList[nearestAsteroid()].ycoord = craftyCoord -1 - asteroidHeight;
+    //     }
+    // } 
+    
+
+}
 
 

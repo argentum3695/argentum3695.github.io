@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Number Finder</title>
+</head>
+<body>
+
+    <div id="flex-container">
+        <div id="output">Prime numbers: <br></div>
+        <div id="working-out"></div>
+
+
+    </div>
+    
+
+    
+    <script>
+        var numLimit;
+        console.log(parseInt(numLimit));
+        while (isNaN((numLimit))) {
+            numLimit = prompt('enter max number: '); 
+        }
+        var i;
+        for (i = 2; i<= numLimit; i++) {
+            console.log(`Testing ${i}`);
+            // document.getElementById('working-out').innerText = '';
+            // document.getElementById('working-out').innerText += `Testing ${i}\n`;
+
+            prime = true;
+            for (j = 2; j<i; j++) {
+                // document.getElementById('working-out').innerText += `Testing ${j} against ${i}\n`;
+                if (i % j == 0) {
+                    console.log(`${i} failed`);
+                    // document.getElementById('working-out').innerText += `${i} failed\n`;
+                    prime = false;
+                    break;
+                }
+            }
+            if (prime) {
+                document.getElementById('output').innerText += `${i}\n`;
+            }
+        }
+    </script>
+
+    <style>
+        #flex-container {
+            display: flex;
+            flex-direction: column;
+        }
+        #output, #working-out {
+            border: 1px solid black;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 1rem;
+        }
+    </style>
+
+</body>
+</html>
