@@ -1,6 +1,7 @@
 <!-- Colours -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,48 +9,67 @@
   <link rel="icon" type="image/x-icon" href="lettera.ico">
   <title>argentum3695</title>
 </head>
+
 <body>
   <div class="main" id="main">
     <h3>Hi!</h3>
     <h3>Here are a few of my projects:</h3>
   </div>
 
-  <div class="projects" id="projects">
-      <!-- <a href="pigame.html">pi game</a><br>
-      <a href="clickthebox.html">Click the Boxes</a> -->
+  <h3>Games</h3>
+
+  <div class="projects" id="games">
+    <div onclick="window.open('asteroiddodge.html', '_blank');" class="projectbox" id="projectbox5">
+      <p class="boxheading">Asteroid Dodge</p>
+      <p class="boxcontent">Dodge the asteroids. <br> <i>(Under Development)</i></p>
+    </div>
 
 
-      <div onclick="window.open('asteroiddodge.html', '_blank');" class="projectbox" id="projectbox5">
-        <p class="boxheading">Asteroid Dodge</p>
-        <p class="boxcontent">Dodge the asteroids. <br> <i>(Under Development)</i></p>
-      </div>
 
-      <div onclick="window.open('when.html', '_blank');" class="projectbox" id="projectbox3">
-        <p class="boxheading">When?</p>
-        <p class="boxcontent">An actually useful project: makes a dashboard of dates in the future.<br><i>(Under Development)</i></p>
-      </div>
+    <div onclick="window.open('dive.html', '_blank');" class="projectbox" id="projectbox6">
+      <p class="boxheading">Dive</p>
+      <p class="boxcontent">Time to go skydiving.<br><i>(Under Development)</i></p>
+    </div>
 
-      <div onclick="window.open('dive.html', '_blank');" class="projectbox" id="projectbox6">
-        <p class="boxheading">Dive</p>
-        <p class="boxcontent">Time to go skydiving.<br><i>Under Development</i></p>
-      </div>
+    <div onclick="window.open('clickthebox.html', '_blank');" class="projectbox" id="projectbox4">
+      <p class="boxheading">Click the Box</p>
+      <p class="boxcontent">Click on the green boxes that appear as fast as you can!</p>
+    </div>
 
-      <div onclick="window.open('clickthebox.html', '_blank');" class="projectbox" id="projectbox4">
-        <p class="boxheading">Click the Box</p>
-        <p class="boxcontent">Click on the green boxes that appear as fast as you can!</p>
-      </div>
 
-      <div onclick="window.open('pigame.html', '_blank');" class="projectbox" id="projectbox1">
-        <p class="boxheading">Pi Game</p>
-        <p class="boxcontent">A game where you type pi. That's actually it.</p>
-      </div>
+  </div>
 
-      <div onclick="window.open('piprint.html', '_blank');" class="projectbox" id="projectbox2">
-        <p class="boxheading">Print Pi</p>
-        <p class="boxcontent">Make uniquely numbered boxes for a selected number of digits of pi. To be used for printing.</p>
-      </div>
+  <h3>Useful Stuff</h3>
+
+
+  <div class="projects" id="useful">
+    <div onclick="window.open('when.html', '_blank');" class="projectbox" id="projectbox3">
+      <p class="boxheading">When?</p>
+      <p class="boxcontent">An actually useful project: makes a dashboard of dates in the future.<br><i>(Under
+          Development)</i></p>
+    </div>
+  </div>
+
+
+  <h3>Maths</h3>
+
+
+  <div class="projects" id="maths">
+    <div onclick="window.open('pigame.html', '_blank');" class="projectbox" id="projectbox1">
+      <p class="boxheading">Pi Game</p>
+      <p class="boxcontent">A game where you type pi. That's actually it.</p>
+    </div>
+
+    <div onclick="window.open('piprint.html', '_blank');" class="projectbox" id="projectbox2">
+      <p class="boxheading">Print Pi</p>
+      <p class="boxcontent">Make uniquely numbered boxes for a selected number of digits of pi. To be used for printing.
+      </p>
+    </div>
+
+
   </div>
 
   <script src="script.js"></script>
 </body>
+
 </html>

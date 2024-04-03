@@ -32,6 +32,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+    justify-content:center
+
 }
 
 a {
@@ -71,12 +74,12 @@ a:hover {
     margin: 1rem;
     width: 20rem;
     color: var(--text);
-    border: 0.1em solid white;
+    border: 0.1em solid var(--text);
     
     /* height: 12vw; */
     border-radius: 0.5em;
     transition: 0.2s;
-    margin: auto;
+    /* margin: auto; */
     padding: 1vw;
     text-align: center;
 
@@ -125,8 +128,8 @@ a:hover {
   }
 
 
-  @media screen and (max-width: 800px) {
-    .projectbox, .firstprojectbox {
-      width: 90%; 
-    }
-  } 
+  h3 {
+    color: var(--primary);
+    text-align: center;
+    font-size: 2.5rem;
+  }
