@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <p id="results"></p>
+
+
+    <script>
+
+        prefixes = [ 'meth', 'eth', 'prop', 'but', 'pent', 'hex', 'hept', 'oct'
+        ]
+
+        targetMM = parseInt(prompt("target molar mass:"), "");
+
+
+        function alkaneMM(n) {
+            return 12*n + (2*n+2)
+        }
+
+        function alkeneMM(n) {
+            return 12*n + (2*n)
+        }
+
+        function alkyneMM(n) {
+            return 12*n + (2*n-2)
+        }
+
+        function alcoholMM(n) {
+            return 12*n + (2*n+2) + 16
+        }
+
+         function carbAcidMM(n) {
+            return 12*(n) + 2*n + 16*2
+        }
+
+
+
+        found = false;
+        var results = [];
+
+       
+            for (i = 1; i<9; i++) {
+                if (alkaneMM(i) == targetMM) {
+                    results.push(prefixes[i-1] + 'ane');
+                    found = true;
+                    
+
+                }   if (alkeneMM(i) == targetMM && i>1) {
+                    results.push(prefixes[i-1] + 'ene');
+                    found = true;
+                    
+
+                }   if (alkyneMM(i) == targetMM && i>1) {
+                    results.push(prefixes[i-1] + 'yne');
+                    found = true;
+                    
+
+                }  if (alcoholMM(i) == targetMM) {
+                    results.push(prefixes[i-1] + 'anol');
+                    found = true;
+
+
+                }  if (carbAcidMM(i) == targetMM) {
+                    results.push(prefixes[i-1] + 'anoic acid');
+                    found = true;
+
+                }
+
+            }
+        
+       
+        for (i = 0; i <results.length; i++) {
+            if (i!=0) {
+                document.getElementById('results').innerHTML += `, ${results[i]}`
+            } else {
+                document.getElementById('results').innerHTML += `${results[i]}`
+
+            }
+        }
+
+        
+    </script>
+    
+</body>
+</html>
