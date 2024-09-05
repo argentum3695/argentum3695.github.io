@@ -52,7 +52,7 @@ function updateRenderList() {
     const currDate = new Date();
     renderList = [];
     for (i = 0; i < keyslist.length; i++) {
-        if (keyslist[i] != 'bgimage') {
+        if (keyslist[i] != 'bgimage' && new Date(localStorage.getItem(keyslist[i])) != NaN) {
         endDate = new Date(localStorage.getItem(keyslist[i]));
         dateDiff = Math.abs(currDate - endDate);
         dateDiffDays = Math.ceil((dateDiff / (1000 * 60 * 60 * 24)));
