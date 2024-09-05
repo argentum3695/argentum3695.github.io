@@ -52,12 +52,12 @@ function updateRenderList() {
     const currDate = new Date();
     renderList = [];
     for (i = 0; i < keyslist.length; i++) {
-        if (keyslist[i] != 'bgimage' && new Date(localStorage.getItem(keyslist[i])) != NaN) {
+        if (keyslist[i] != 'bgimage' && keyslist[i].slice(0,4) == 'date') {
         endDate = new Date(localStorage.getItem(keyslist[i]));
         dateDiff = Math.abs(currDate - endDate);
         dateDiffDays = Math.ceil((dateDiff / (1000 * 60 * 60 * 24)));
 
-        renderList.push({ name: keyslist[i].replace('#', ' '), daysleft: dateDiffDays, enddate: endDate });
+        renderList.push({ name: keyslist[i].replace('#', ' ').slice(4), daysleft: dateDiffDays, enddate: endDate });
 
 
         // console.log(renderList);
@@ -85,6 +85,7 @@ function updateRenderList() {
     function addDate() {
         datename = prompt("add a date name: ");
 
+        datename = 'date' + datename;
         localStorage.setItem(datename.replace(" ", "#"), document.getElementById('datepicker').value);
         keyslist = Object.keys(localStorage);
         // console.log(keyslist)
