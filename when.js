@@ -54,6 +54,7 @@ function updateRenderList() {
     for (i = 0; i < keyslist.length; i++) {
         if (keyslist[i] != 'bgimage' && keyslist[i].slice(0,4) == 'date') {
         endDate = new Date(localStorage.getItem(keyslist[i]));
+        endDate.setHours(9);
         dateDiff = Math.abs(currDate - endDate);
         dateDiffDays = Math.ceil((dateDiff / (1000 * 60 * 60 * 24)));
 
