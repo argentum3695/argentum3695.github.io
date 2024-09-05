@@ -30,7 +30,13 @@ setInterval(() => {
 
 function makeEventBoxes() {
     document.getElementById("eventboxcontainer").innerHTML = '';
+    filteredkeyslist = [];
     for (i = 0; i < keyslist.length ; i++) {
+        if (keyslist[i] != 'bgimage' && keyslist[i].slice(0,4) == 'date') {
+            filteredkeyslist.push(keyslist[i])
+        }
+    }
+    for (i = 0; i < filteredkeyslist.length ; i++) {
         document.getElementById("eventboxcontainer").innerHTML += "<div class='eventbox'id='eventbox" + (i + 1) + "'><p id='datename" + (i + 1) + "' class='datename'></p><p id='days" + (i + 1) + "' class='days'></p><p class='dayslabel'>days</p><p id='eventdate" + (i + 1) + "' class='eventdate'></p></div>"
     }
 }
