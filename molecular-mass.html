@@ -7,6 +7,9 @@
 </head>
 <body>
 
+    
+    <input id="input" placeholder="Target molar mass (nearest integer)" style="width:17em">
+    <button id="search" onclick="findmatches()">Search</button>
     <p id="results"></p>
 
 
@@ -15,7 +18,7 @@
         prefixes = [ 'meth', 'eth', 'prop', 'but', 'pent', 'hex', 'hept', 'oct'
         ]
 
-        targetMM = parseInt(prompt("target molar mass (nearest integer):"), "");
+        // targetMM = parseInt(prompt("target molar mass (nearest integer):"), "");
 
         
 
@@ -40,24 +43,29 @@
         }
 
 
+function findmatches() {
 
-        found = false;
+    targetMM = document.getElementById('input').value;
+    document.getElementById('input').value = '';
+
+
+    found = false;
         var results = [];
 
        
             for (i = 1; i<9; i++) {
                 if (alkaneMM(i) == targetMM) {
-                    results.push(prefixes[i-1] + 'ane');
+                    results.push(prefixes[i-1] + 'ane ' + '(C<sub>' + i + '</sub>H<sub>' + (2*i+2) + '</sub>)');
                     found = true;
                     
 
                 }   if (alkeneMM(i) == targetMM && i>1) {
-                    results.push(prefixes[i-1] + 'ene');
+                    results.push(prefixes[i-1] + 'ene ' + '(C<sub>' + i + '</sub>H<sub>' + (2*i) + '</sub>)');
                     found = true;
                     
 
                 }   if (alkyneMM(i) == targetMM && i>1) {
-                    results.push(prefixes[i-1] + 'yne');
+                    results.push(prefixes[i-1] + 'yne '  + '(C<sub>' + i + '</sub>H<sub>' + (2*i-2) + '</sub>)');
                     found = true;
                     
 
@@ -75,6 +83,8 @@
             }
         
        
+            document.getElementById('results').innerHTML = '';
+
         for (i = 0; i <results.length; i++) {
             if (i!=0) {
                 document.getElementById('results').innerHTML += `, ${results[i]}`
@@ -83,6 +93,8 @@
 
             }
         }
+}
+        
 
         
     </script>
